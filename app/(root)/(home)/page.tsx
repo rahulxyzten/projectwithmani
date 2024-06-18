@@ -59,7 +59,7 @@ const page = async ({ searchParams }: Props) => {
           query={searchParams?.query || ""}
           category={searchParams?.category || ""}
         />
-        <div className="mt-12 flex w-full flex-wrap justify-center gap-16 sm:justify-start">
+        <div className="mt-12 flex w-full flex-wrap justify-center gap-10 sm:justify-start">
           <ResourceCard />
           <ResourceCard />
           <ResourceCard />

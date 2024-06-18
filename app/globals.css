@@ -238,3 +238,24 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.ql-container {
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  color: #fff;
+  min-height: 18em;
+  /* border: 2px solid #ccc; */
+}
+
+.ql-snow.ql-toolbar {
+  display: block;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+  background: #eaecec;
+  /* border: 2px solid #ccc; */
+}
+
+/* .ql-container .ql-editor.ql-blank::before {
+  color: white;
+  font-family: "Poppins", sans-serif;
+} */

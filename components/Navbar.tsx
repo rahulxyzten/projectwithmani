@@ -48,6 +48,11 @@ const Navbar = () => {
               Sign Up
             </Link>
           </li>
+          <li className="body-text text-gradient_blue-purple !font-bold">
+            <Link href="/create-project">
+              Create
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>
