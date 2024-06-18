@@ -4,12 +4,12 @@ import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
 const links = [
-  "all posts",
+  "all",
   "arduino",
   "electronics",
   "esp8266",
-  "more"
-  // "raspberry pi",
+  "more",
+  // "raspberrypi",
   // "multirotor",
   // "esp32",
 ];
@@ -20,26 +20,17 @@ const Filters = () => {
   const router = useRouter();
 
   const handleFilter = (link: string) => {
-    let newUrl = "";
+    const params = new URLSearchParams(searchParams);
 
-    // if (active === link) {
-    //   setActive("");
+    if (active === link) {
+      setActive("");
+      params.delete("category");
+    } else {
+      setActive(link);
+      params.set("category", link.toLowerCase());
+    }
 
-    //   newUrl = formUrlQuery({
-    //     params: searchParams.toString(),
-    //     keysToRemove: ["category"],
-    //   });
-    // } else {
-    //   setActive(link);
-
-    //   newUrl = formUrlQuery({
-    //     params: searchParams.toString(),
-    //     key: "category",
-    //     value: link.toLowerCase(),
-    //   });
-    // }
-
-    router.push(newUrl, { scroll: false });
+    router.push(`?${params.toString()}`, { scroll: false });
   };
 
   return (
