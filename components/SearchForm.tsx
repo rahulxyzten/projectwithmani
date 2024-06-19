@@ -10,30 +10,21 @@ const SearchForm = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(searchParams.get("query") || "");
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      let newUrl = "";
-
-      //   if (search) {
-      //     newUrl = formUrlQuery({
-      //       params: searchParams.toString(),
-      //       key: "query",
-      //       value: search,
-      //     });
-      //   } else {
-      //     newUrl = formUrlQuery({
-      //       params: searchParams.toString(),
-      //       keysToRemove: ["query"],
-      //     });
-      //   }
-
-      router.push(newUrl, { scroll: false });
+      const params = new URLSearchParams(searchParams);
+      if (search) {
+        params.set("query", search);
+      } else {
+        params.delete("query");
+      }
+      router.push(`${pathname}?${params.toString()}`);
     }, 300);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [search]);
+  }, [search, searchParams, router, pathname]);
 
   return (
     <form className="flex-center mx-auto mt-10 w-full sm:-mt-10 sm:px-5">

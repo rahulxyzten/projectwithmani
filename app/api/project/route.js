@@ -10,15 +10,17 @@ export const GET = async (request) => {
     await connectToDB();
 
     const filter = {};
-    if (category) filter.category = category;
-
-    let projects;
-
-    if (category === "all") {
-      projects = await Project.find({});
-    } else {
-      projects = await Project.find(filter);
+    if (category && category !== "all") filter.category = category;
+    if (query) {
+      filter.$or = [
+        { title: { $regex: query, $options: "i" } },
+        { summary: { $regex: query, $options: "i" } },
+        { content: { $regex: query, $options: "i" } },
+        { category: { $regex: query, $options: "i" } },
+      ];
     }
+
+    const projects = await Project.find(filter);
 
     return new Response(JSON.stringify(projects), { status: 200 });
   } catch (error) {

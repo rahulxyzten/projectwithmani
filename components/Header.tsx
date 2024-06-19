@@ -8,7 +8,7 @@ interface Props {
       return (
         <h1 className="heading3 self-start text-white-800">
           Search results for "{query}" in{" "}
-          <span className="capitalize">{category}</span>
+          <span className="capitalize">{category} projects</span>
         </h1>
       );
     }

@@ -15,15 +15,17 @@ const links = [
 ];
 
 const Filters = () => {
-  const [active, setActive] = useState("");
   const searchParams = useSearchParams();
   const router = useRouter();
+  const [active, setActive] = useState<string>(
+    searchParams.get("category") || "all"
+  );
 
   const handleFilter = (link: string) => {
     const params = new URLSearchParams(searchParams);
 
     if (active === link) {
-      setActive("");
+      setActive("all");
       params.delete("category");
     } else {
       setActive(link);
@@ -34,7 +36,7 @@ const Filters = () => {
   };
 
   return (
-    <ul className="text-white-800 body-text no-scrollbar flex w-full max-w-full gap-2 overflow-auto py-12 sm:max-w-2xl">
+    <ul className="text-white-800 body-text no-scrollbar flex w-full max-w-full gap-2 overflow-auto pt-12 sm:max-w-2xl">
       {links.map((link) => (
         <button
           key={link}

@@ -14,7 +14,7 @@ const Feed = () => {
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const category = searchParams.get("category") || "";
+      const category = searchParams.get("category") || "all";
       const query = searchParams.get("query") || "";
       const response = await fetch(
         `/api/project?category=${category}&query=${query}`
@@ -25,6 +25,9 @@ const Feed = () => {
 
     fetchProjects();
   }, [searchParams]);
+
+  const query = searchParams.get("query") || "";
+  const category = searchParams.get("category") || "all";
 
   return (
     <>
@@ -37,32 +40,32 @@ const Feed = () => {
         <SearchForm />
       </section>
       <Filters />
-      {(searchParams.get("query") || searchParams.get("category")) && (
-        <section className="flex-center mt-6 w-full flex-col sm:mt-20">
-          <Header
-            query={searchParams.get("query") || ""}
-            category={searchParams.get("category") || ""}
-          />
-          <div className="mt-12 flex w-full flex-wrap justify-center gap-10 sm:justify-start">
-            {projects?.length > 0 ? (
-              projects.map((project: any) => (
-                <ProjectCard
-                  key={project._id}
-                  id={project._id}
-                  title={project.title}
-                  summary={project.summary}
-                  content={project.content}
-                  category={project.category}
-                  imgUrl={project.thumbnail?.url || "/default-image-url.jpg"}
-                  youtubeLink={project.youtubelink}
-                />
-              ))
-            ) : (
-              <p className="body-regular text-white-400">No projects found</p>
-            )}
-          </div>
-        </section>
-      )}
+
+      <section className="flex-center mt-6 w-full flex-col sm:mt-20">
+        {query === "" && category === "all" ? (
+          <Header query={query} category="all" />
+        ) : (
+          <Header query={query} category={category} />
+        )}
+        <div className="mt-12 flex w-full flex-wrap justify-center gap-10 sm:justify-start">
+          {projects?.length > 0 ? (
+            projects.map((project: any) => (
+              <ProjectCard
+                key={project._id}
+                id={project._id}
+                title={project.title}
+                summary={project.summary}
+                content={project.content}
+                category={project.category}
+                imgUrl={project.thumbnail?.url}
+                youtubeLink={project.youtubelink}
+              />
+            ))
+          ) : (
+            <p className="body-regular text-white-400">No projects found</p>
+          )}
+        </div>
+      </section>
     </>
   );
 };
