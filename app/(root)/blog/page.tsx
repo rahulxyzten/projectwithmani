@@ -64,6 +64,8 @@ const page = () => {
           ></iframe>
         </div>
 
+        <p className="mb-8 text-white" dangerouslySetInnerHTML={{ __html: project.content }}></p>
+
         <section className="mb-8 text-white">
           <h2 className="text-2xl font-bold mb-4">Sponsors</h2>
           <ul>
