@@ -18,7 +18,7 @@ const Navbar = () => {
               <Link href="#">I</Link>
             </li>
             <li className="body-text !font-bold">
-              <Link href="/gallary">Gallery</Link>
+              <Link href="/gallery">Gallery</Link>
             </li>
             <li className="body-text text-gradient_blue-purple !font-bold">
               <Link href="#">I</Link>
@@ -50,7 +50,12 @@ const Navbar = () => {
           </li>
           <li className="body-text text-gradient_blue-purple !font-bold">
             <Link href="/create-project">
-              Create
+              Create Project
+            </Link>
+          </li>
+          <li className="body-text text-gradient_blue-purple !font-bold">
+            <Link href="/create-post">
+              Create Post
             </Link>
           </li>
         </ul>

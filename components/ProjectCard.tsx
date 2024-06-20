@@ -1,6 +1,5 @@
-import { Url } from "next/dist/shared/lib/router/router";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 
 interface Props {
   id: string;
@@ -21,13 +20,19 @@ const ProjectCard = ({
   imgUrl,
   youtubeLink,
 }: Props) => {
+  const router = useRouter();
+
+  const handleBlog = async () => {
+    router.push(`/blog?id=${id}`);
+  };
+
   return (
-    <div className="text-slate-950 shadow-sm dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50 w-full rounded-[10px] border border-black-400 bg-black-200/80 p-3 shadow-video-card sm:w-[410px] sm:p-5">
+    <div className="text-slate-950 shadow-sm w-full rounded-[10px] border border-black-400 bg-black-200/80 p-3 shadow-video-card sm:w-[410px] sm:p-5">
       <div className="flex flex-col space-y-1.5 p-0 cursor-pointer">
-        <div className="relative h-[170px] w-full rounded-md xs:h-[265px] sm:h-[210px]">
+        <div className="relative h-[170px] w-full rounded-md xs:h-[220px] sm:h-[205px] overflow-hidden">
           <Image
             src={imgUrl}
-            className="rounded-t-lg !bg-transparent object-cover"
+            className="rounded-t-lg !bg-transparent object-cover transition-transform duration-1000 ease-in-out transform hover:scale-125"
             width={400}
             height={400}
             alt="thumbnail"
@@ -39,10 +44,9 @@ const ProjectCard = ({
       </div>
       <div className="mt-4 flex items-center justify-between gap-3 p-0">
         <p className="body-medium capitalize text-white-500">{category}</p>
-        <Link
-          href={youtubeLink}
-          target="_blank"
-          className="flex-center text-gradient_purple-blue body-semibold gap-1.5"
+        <p
+          onClick={handleBlog}
+          className="flex-center cursor-pointer text-gradient_purple-blue body-semibold gap-1.5"
         >
           Read More
           <Image
@@ -52,7 +56,7 @@ const ProjectCard = ({
             height={0}
             alt="arrow"
           />
-        </Link>
+        </p>
       </div>
     </div>
   );

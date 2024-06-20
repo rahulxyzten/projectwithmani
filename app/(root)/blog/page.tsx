@@ -1,45 +1,147 @@
+"use client";
+
 import React from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
 const page = () => {
-  return (
-    <section className=" pt-[180px] flex w-full flex-col items-center">
-      <h1 className="heading3 text-center text-white">Snapgram Top Creators</h1>
-      <div className="markdown prose mt-10 w-full max-w-4xl text-white-800 prose-headings:text-white prose-p:text-white-800 prose-a:text-purple prose-blockquote:text-white-800 prose-strong:text-white prose-code:text-white-800 prose-pre:bg-black-400 prose-ol:text-white-800 prose-ul:text-white-800 prose-img:w-full prose-hr:border-dashed prose-hr:border-gray-600">
-        <p>
-          <Image
-            src="/test.png"
-            className="rounded-t-lg !bg-transparent object-cover"
-            width={400}
-            height={400}
-            alt="arrow"
-          />
-        </p>
-        <h2>Task 🎯 </h2>
-        <p>Your goal is to show a few creators on the right side</p>
-        <h2>Example </h2>
-        <p></p>
-        <h2>Resources</h2>
+  const searchParams = useSearchParams();
+  const projectId = searchParams.get("id");
 
-        <h2>Must Play</h2>
-        <p></p>
-        <p></p>
-        <h2> </h2>
-        <p>Not sure how to get started with this? We're here for you .</p>
-        <p>Let's take it step by step !</p>
-        <p>First and foremost, ask yourself -</p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <ul></ul>
-        <p>So let's start by implementing the UI first,</p>
-        <ul></ul>
-        <p></p>
-        <ul></ul>
-        <p></p>
-        <ul></ul>
-        <p></p>
+  const [project, setProject] = useState({
+    title: "",
+    summary: "",
+    category: "",
+    content: "",
+    thumbnailUrl: "",
+    youtubelink: "",
+  });
+
+  useEffect(() => {
+    const getProjectDetails = async () => {
+      const response = await fetch(`/api/project/${projectId}`);
+      const data = await response.json();
+      setProject({
+        title: data.title,
+        summary: data.summary,
+        category: data.category,
+        content: data.content,
+        thumbnailUrl: data.thumbnail.url,
+        youtubelink: data.youtubelink,
+      });
+    };
+
+    if (projectId) getProjectDetails();
+  }, [projectId]);
+
+  return (
+    <section className=" pt-[160px] flex w-full flex-col items-center">
+      <div className="container mx-auto py-8 px-4">
+        <h1 className="text-4xl font-bold text-center mb-8 text-purple">
+          {project.title}
+        </h1>
+
+        <div className="flex justify-center mb-8">
+          <Image
+            src={project.thumbnailUrl}
+            alt="Project Image"
+            width={800}
+            height={600}
+            className="rounded"
+          />
+        </div>
+
+        <div className="flex justify-center mb-8">
+          {/* <YouTube videoId='url here' className="w-full max-w-2xl" /> */}
+          <iframe
+            width="800"
+            height="450"
+            src="https://www.youtube.com/embed/KGZqndaJB4A?si=ghH4BL62uEoUfyb8"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+
+        <section className="mb-8 text-white">
+          <h2 className="text-2xl font-bold mb-4">Sponsors</h2>
+          <ul>
+            <li>Start Your FREE Altium Trial</li>
+            <li>
+              Altium PCB Designer:{" "}
+              <Link href="https://www.altium.com/yt/ViralScience">
+                https://www.altium.com/yt/ViralScience
+              </Link>
+            </li>
+            <li>
+              Altium 365:{" "}
+              <Link href="https://www.altium.com/altium-365">
+                https://www.altium.com/altium-365
+              </Link>
+            </li>
+            <li>
+              Octopart components search engine:{" "}
+              <Link href="https://octopart.com">https://octopart.com</Link>
+            </li>
+          </ul>
+        </section>
+
+        <section className="mb-8 text-white">
+          <h2 className="text-2xl font-bold mb-4">Materials</h2>
+          <ul>
+            <li>Nodemcu ESP8266 board</li>
+            <li>RC522 RFID Reader</li>
+            <li>16x2 I2c LCD Display</li>
+            <li>RFID Tags</li>
+            <li>Buzzer</li>
+            <li>BreadBoard</li>
+            <li>Jumper Wires</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-bold mb-4 text-white">
+            Circuit Diagram
+          </h2>
+          <div className="flex justify-center">
+            <Image
+              src="/asset3.webp" // replace with your image path
+              alt="Circuit Diagram"
+              width={800}
+              height={600}
+              className="rounded"
+            />
+          </div>
+        </section>
+
+        <section className="mb-8 text-white">
+          <h2 className="text-2xl font-bold mb-4">Code File</h2>
+          <p>Purchase the code file to get the complete implementation.</p>
+          <button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white font-bold py-2 px-4 rounded">
+            Buy Now
+          </button>
+        </section>
+
+        <section className="mb-8 text-white">
+          <h2 className="text-2xl font-bold mb-4">Comments</h2>
+          {/* Implement your comment section here */}
+        </section>
+
+        <section className="mb-8 text-white">
+          <h2 className="text-2xl font-bold mb-4">Related Posts</h2>
+          <ul>
+            <li>
+              <Link href="/related-post-1">Related Project 1</Link>
+            </li>
+            <li>
+              <Link href="/related-post-2">Related Project 2</Link>
+            </li>
+            <li>
+              <Link href="/related-post-3">Related Project 3</Link>
+            </li>
+          </ul>
+        </section>
       </div>
     </section>
   );

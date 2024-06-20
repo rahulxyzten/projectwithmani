@@ -3,7 +3,7 @@ import { Schema, model, models } from "mongoose";
 const ProjectSchema = new Schema({
   title: {
     type: String,
-    required: [true, "Prompt is required."],
+    required: [true, "Title is required."],
   },
   summary: {
     type: String,

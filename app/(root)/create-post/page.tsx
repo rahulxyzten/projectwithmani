@@ -2,21 +2,18 @@
 
 import React, { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import Form from "@/components/Form";
+import PostForm from "@/components/PostForm";
 
-interface Project {
+interface Post {
   title: string;
-  summary: string;
-  category: string;
-  content: string;
-  thumbnail: File;
-  youtubelink: string;
+  username: string;
+  cover: File;
 }
 
 interface Props {
   type: string;
-  project: Project;
-  setProject: (project: Project) => void;
+  post: Post;
+  setPost: (post: Post) => void;
   submitting: boolean;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
@@ -25,16 +22,13 @@ const page = () => {
   const router = useRouter();
 
   const [submitting, setSubmitting] = useState(false);
-  const [project, setProject] = useState({
+  const [post, setPost] = useState({
     title: "",
-    summary: "",
-    category: "",
-    content: "",
-    thumbnail: {} as File,
-    youtubelink: "",
+    username: "",
+    cover: {} as File,
   });
 
-  const createProject = async (e: FormEvent) => {
+  const createPost = async (e: FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
 
@@ -49,7 +43,7 @@ const page = () => {
 
     try {
       const data = new FormData();
-      data.append("file", project.thumbnail);
+      data.append("file", post.cover);
       data.append("upload_preset", presetKey);
 
       const cloudRes = await fetch(
@@ -66,23 +60,20 @@ const page = () => {
         const imagePublicId = resData.public_id;
         const imageUrl = resData.secure_url;
 
-        const response = await fetch("/api/project/new", {
+        const response = await fetch("/api/gallery/new", {
           method: "POST",
           body: JSON.stringify({
-            title: project.title,
-            summary: project.summary,
-            content: project.content,
-            category: project.category,
-            thumbnail: {
+            title: post.title,
+            username: post.username,
+            cover: {
               public_id: imagePublicId,
               url: imageUrl,
             },
-            youtubelink: project.youtubelink,
           }),
         });
 
         if (response.ok) {
-          router.push("/");
+          router.push("/gallery");
         }
       }
     } catch (error) {
@@ -93,13 +84,13 @@ const page = () => {
   };
 
   return (
-    <Form
-      type="Create"
-      project={project}
-      setProject={setProject}
-      submitting={submitting}
-      handleSubmit={createProject}
-    />
+    <PostForm
+    type="Create"
+    post={post}
+    setPost={setPost}
+    submitting={submitting}
+    handleSubmit={createPost}
+  />
   );
 };
 
