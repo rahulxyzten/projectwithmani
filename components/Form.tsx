@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import Editor from "./Editor";
 import { Input } from "@nextui-org/react";
@@ -8,10 +8,10 @@ import { Select, SelectItem } from "@nextui-org/react";
 interface Project {
   title: string;
   summary: string;
+  category: string;
   content: string;
   thumbnail: File;
   youtubelink: string;
-  category: string;
 }
 
 interface Props {
@@ -29,6 +29,22 @@ const Form = ({
   submitting,
   handleSubmit,
 }: Props) => {
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const items = [
+    "arduino",
+    "electronics",
+    "esp8266",
+    "raspberrypi",
+    "multirotor",
+    "esp32",
+  ];
+
+  useEffect(() => {
+    if (project.category) {
+      setSelectedKeys([project.category]);
+    }
+  }, [project.category]);
+
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -41,7 +57,7 @@ const Form = ({
       className="flex-center paddings mx-auto max-w-screen-xl flex-col"
       onSubmit={handleSubmit}
     >
-      <div className="nav-padding w-full   ">
+      <div className="nav-padding w-full">
         <h1 className="mb-7 heading3 text-white-800">{type} your project ✨</h1>
         <div className="shadow-sm dark:border-zinc-600 rounded-[10px] border-2 border-black-400 p-5">
           <Input
@@ -52,7 +68,6 @@ const Form = ({
             value={project.title}
             onChange={(e) => setProject({ ...project, title: e.target.value })}
           />
-
           <Input
             type="text"
             className="mb-5 "
@@ -63,46 +78,24 @@ const Form = ({
               setProject({ ...project, summary: e.target.value })
             }
           />
-
           <Select
             variant="underlined"
             label="Select an category :"
-            className="max-w-xs mb-5"
+            className="max-w-xs mb-5 text-white"
             value={project.category}
+            selectedKeys={new Set(selectedKeys)}
+            onSelectionChange={(keys) =>
+              setSelectedKeys(Array.from(keys) as string[])
+            }
             onChange={(e) =>
               setProject({ ...project, category: e.target.value })
             }
           >
-            <SelectItem className="text-white " key="arduino" value="arduino">
-              arduino
-            </SelectItem>
-            <SelectItem
-              className="text-white "
-              key="electronics"
-              value="electronics"
-            >
-              electronics
-            </SelectItem>
-            <SelectItem className="text-white " key="esp8266" value="esp8266">
-              esp8266
-            </SelectItem>
-            <SelectItem
-              className="text-white "
-              key="raspberrypi"
-              value="raspberrypi"
-            >
-              raspberrypi
-            </SelectItem>
-            <SelectItem
-              className="text-white "
-              key="multirotor"
-              value="multirotor"
-            >
-              multirotor
-            </SelectItem>
-            <SelectItem className="text-white " key="esp32" value="esp32">
-              esp32
-            </SelectItem>
+            {items.map((item) => (
+              <SelectItem className="text-white" key={item} value={item}>
+                {item}
+              </SelectItem>
+            ))}
           </Select>
 
           <p className="mb-2 ml-1 text-sm text-gray-200">Content :</p>

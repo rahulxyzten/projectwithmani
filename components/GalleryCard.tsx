@@ -19,6 +19,7 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
           <Image
             src={image}
             className="rounded-t-lg !bg-transparent object-cover transition-transform duration-1000 ease-in-out transform hover:scale-125"
+            className="rounded-t-lg !bg-transparent object-cover transition-transform duration-1000 ease-in-out transform hover:scale-105"
             width={400}
             height={400}
             alt="thumbnail"

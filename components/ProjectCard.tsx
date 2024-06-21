@@ -9,6 +9,8 @@ interface Props {
   category: string;
   imgUrl: string;
   youtubeLink: string;
+  handleDelete: () => void;
+  // deleting: boolean;
 }
 
 const ProjectCard = ({
@@ -19,8 +21,13 @@ const ProjectCard = ({
   category,
   imgUrl,
   youtubeLink,
+  handleDelete,
 }: Props) => {
   const router = useRouter();
+
+  const handleEdit = async () => {
+    router.push(`/update-project?id=${id}`);
+  };
 
   const handleBlog = async () => {
     router.push(`/blog?id=${id}`);
@@ -32,7 +39,7 @@ const ProjectCard = ({
         <div className="relative h-[170px] w-full rounded-md xs:h-[220px] sm:h-[205px] overflow-hidden">
           <Image
             src={imgUrl}
-            className="rounded-t-lg !bg-transparent object-cover transition-transform duration-1000 ease-in-out transform hover:scale-125"
+            className="rounded-t-lg !bg-transparent object-cover transition-transform duration-1000 ease-in-out transform hover:scale-105"
             width={400}
             height={400}
             alt="thumbnail"
@@ -43,7 +50,22 @@ const ProjectCard = ({
         </h3>
       </div>
       <div className="mt-4 flex items-center justify-between gap-3 p-0">
-        <p className="body-medium capitalize text-white-500">{category}</p>
+        {/* <p className="body-medium capitalize text-white-500">{category}</p> */}
+        <div className="flex-center gap-4">
+          <p
+            className="font-inter text-sm body-semibold text-gradient_blue-purple cursor-pointer"
+            onClick={handleEdit}
+          >
+            Edit
+          </p>
+          <p
+            className="font-inter text-sm body-semibold text-gradient_blue-purple cursor-pointer"
+            onClick={handleDelete}
+          >
+            Delete
+            {/* {deleting ? "Deleting..." : "Delete"} */}
+          </p>
+        </div>
         <p
           onClick={handleBlog}
           className="flex-center cursor-pointer text-gradient_purple-blue body-semibold gap-1.5"

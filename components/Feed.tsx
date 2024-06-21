@@ -7,10 +7,21 @@ import Filters from "./Filters";
 import Header from "./Header";
 import ProjectCard from "./ProjectCard";
 
+interface Project {
+  _id: string;
+  title: string;
+  summary: string;
+  category: string;
+  content: string;
+  thumbnail: object;
+  youtubelink: string;
+}
+
 const Feed = () => {
   const searchParams = useSearchParams();
 
   const [projects, setProjects] = useState<any[]>([]);
+  // const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -28,6 +39,30 @@ const Feed = () => {
 
   const query = searchParams.get("query") || "";
   const category = searchParams.get("category") || "all";
+
+  const handleDelete = async (project: Project) => {
+    const hasConfirmed = confirm(
+      "Are you sure you want to delete this prompt?"
+    );
+
+    if (hasConfirmed) {
+      // setDeleting(true);
+      try {
+        await fetch(`/api/project/${project._id.toString()}`, {
+          method: "DELETE",
+        });
+
+        const filteredPosts = projects.filter((p) => p._id !== project._id);
+
+        setProjects(filteredPosts);
+      } catch (error) {
+        console.log(error);
+      }
+      //  finally {
+      // setDeleting(false);
+      // }
+    }
+  };
 
   return (
     <>
@@ -59,6 +94,8 @@ const Feed = () => {
                 category={project.category}
                 imgUrl={project.thumbnail?.url}
                 youtubeLink={project.youtubelink}
+                handleDelete={() => handleDelete(project)}
+                // deleting = {deleting}
               />
             ))
           ) : (

@@ -39,12 +39,12 @@ const Navbar = () => {
 
         <ul className="flex-center gap-x-3 max-md:hidden md:gap-x-5">
           <li className="body-text text-gradient_blue-purple !font-bold">
-            <Link href="#">
+            <Link href="/login">
               Login
             </Link>
           </li>
           <li className="body-text text-gradient_blue-purple !font-bold">
-            <Link href="#">
+            <Link href="/register">
               Sign Up
             </Link>
           </li>
