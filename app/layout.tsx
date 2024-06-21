@@ -3,8 +3,8 @@ import "./globals.css";
 import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
-  title: "JS Mastery",
-  description: "JS Mastery Resources",
+  title: "Project With Mani",
+  description: "Project With Mani",
 };
 
 export default function RootLayout({
