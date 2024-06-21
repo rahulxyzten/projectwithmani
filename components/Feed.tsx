@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 import SearchForm from "./SearchForm";
 import Filters from "./Filters";
 import Header from "./Header";
@@ -84,7 +86,7 @@ const Feed = () => {
         )}
         <div className="mt-12 flex w-full flex-wrap justify-center gap-10 sm:justify-start">
           {projects?.length > 0 ? (
-            projects.map((project: any) => (
+            projects.slice(0, 6).map((project: any) => (
               <ProjectCard
                 key={project._id}
                 id={project._id}
@@ -101,6 +103,21 @@ const Feed = () => {
           ) : (
             <p className="body-regular text-white-400">No projects found</p>
           )}
+        </div>
+        {projects.length > 6 && (
+          <ul className="body-regular text-white-400 mt-6">
+            <Link href="/tut">Click her to view more Projects</Link>
+          </ul>
+        )}
+        <div className="mt-12 flex flex-col items-center">
+        <Image className="mb-4" src="/contact.png" alt="logo" width={500} height={500} />
+
+          <a
+            href="mailto:your-email@example.com"
+            className="text-white hover:underline text-center text-lg"
+          >
+            Contact us via email for Any queries : email@gmail.com
+          </a>
         </div>
       </section>
     </>

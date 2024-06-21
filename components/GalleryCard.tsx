@@ -15,11 +15,10 @@ const GalleryCard: React.FC<GalleryCardProps> = ({
   return (
     <div className="w-ful p-3 sm:w-[310px] sm:p-5">
       <div className="flex flex-col">
-        <div className="relative overflow-hidden h-[150px] w-full rounded-md">
+        <div className="relative overflow-hidden h-[150px] w-full rounded-md hover:drop-shadow-3xl">
           <Image
             src={image}
-            className="rounded-t-lg !bg-transparent object-cover transition-transform duration-1000 ease-in-out transform hover:scale-125"
-            className="rounded-t-lg !bg-transparent object-cover transition-transform duration-1000 ease-in-out transform hover:scale-105"
+            className="rounded-t-lg !bg-transparent object-cover transition-transform duration-1000 ease-in-out transform hover:scale-105 "
             width={400}
             height={400}
             alt="thumbnail"

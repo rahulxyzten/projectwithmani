@@ -6,7 +6,7 @@ import GalleryCard from "@/components/GalleryCard";
 
 const page = () => {
   const [posts, setPosts] = useState<any[]>([]);
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [visibleCount, setVisibleCount] = useState(8);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -19,7 +19,7 @@ const page = () => {
   }, []);
 
   const handleLoadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 6);
+    setVisibleCount((prevCount) => prevCount + 8);
   };
 
   return (

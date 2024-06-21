@@ -7,10 +7,10 @@ const page = () => {
     <section className="pt-[150px] flex w-full flex-col items-center">
       <h1 className="text-4xl font-bold text-center text-white py-5">About Us</h1>
 
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center ">
         <Image
           src="/mani.jpg"
-          className="rounded-full !bg-transparent object-cover"
+          className="rounded-full !bg-transparent object-cover transition-transform duration-500 ease-in-out transform hover:scale-105"
           width={400}
           height={400}
           alt="Kotini Mani Kanta"

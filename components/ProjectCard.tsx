@@ -34,10 +34,11 @@ const ProjectCard = ({
   };
 
   return (
-    <div className="text-slate-950 shadow-sm w-full rounded-[10px] border border-black-400 bg-black-200/80 p-3 shadow-video-card sm:w-[410px] sm:p-5">
+    <div className="text-slate-950 shadow-sm w-full rounded-[10px] border border-black-400 bg-black-200/80 p-3 shadow-video-card sm:w-[410px] sm:p-5 hover:drop-shadow-3xl">
       <div className="flex flex-col space-y-1.5 p-0 cursor-pointer">
         <div className="relative h-[170px] w-full rounded-md xs:h-[220px] sm:h-[205px] overflow-hidden">
           <Image
+            onClick={handleBlog}
             src={imgUrl}
             className="rounded-t-lg !bg-transparent object-cover transition-transform duration-1000 ease-in-out transform hover:scale-105"
             width={400}
@@ -45,7 +46,7 @@ const ProjectCard = ({
             alt="thumbnail"
           />
         </div>
-        <h3 className="text-2xl font-semibold leading-none tracking-tight body-semibold line-clamp-2 w-full pt-5 text-left text-white">
+        <h3 onClick={handleBlog} className="text-2xl font-semibold leading-none tracking-tight body-semibold line-clamp-2 w-full pt-5 text-left text-white">
           {title}
         </h3>
       </div>
