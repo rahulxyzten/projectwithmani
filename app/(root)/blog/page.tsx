@@ -39,9 +39,9 @@ const page = () => {
   return (
     <section className=" pt-[160px] flex w-full flex-col items-center">
       <div className="container mx-auto py-8 px-4">
-        <h1 className="text-4xl font-bold text-center mb-8 text-purple">
+        {/* <h1 className="text-4xl font-bold text-center mb-8 text-purple">
           {project.title}
-        </h1>
+        </h1> */}
 
         <div className="flex justify-center mb-8">
           <Image
@@ -53,20 +53,44 @@ const page = () => {
           />
         </div>
 
+        <section className="mb-8 text-white">
+          <h2 className="text-2xl font-bold mb-4">title</h2>
+          <p className="text-sm font-bold mb-4">{project.title}</p>
+        </section>
+        <section className="mb-8 text-white">
+          <h2 className="text-2xl font-bold mb-4">summary</h2>
+          <p className="text-sm font-bold mb-4">{project.summary}</p>
+        </section>
+        <section className="mb-8 text-white">
+          <h2 className="text-2xl font-bold mb-4">category</h2>
+          <p className="text-sm font-bold mb-4">{project.category}</p>
+        </section>
+        <section className="mb-8 text-white">
+          <h2 className="text-2xl font-bold mb-4">content</h2>
+          <p
+            className="mb-4"
+            dangerouslySetInnerHTML={{ __html: project.content }}
+          ></p>
+        </section>
+        <section className="mb-8 text-white">
+          <h2 className="text-2xl font-bold mb-4">youtubelink</h2>
+          <p className="text-sm font-bold mb-4">{project.youtubelink}</p>
+        </section>
+
         <div className="flex justify-center mb-8">
           {/* <YouTube videoId='url here' className="w-full max-w-2xl" /> */}
-          <iframe
+          {/* <iframe
             width="800"
             height="450"
             src="https://www.youtube.com/embed/KGZqndaJB4A?si=ghH4BL62uEoUfyb8"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
-          ></iframe>
+          ></iframe> */}
         </div>
 
-        <p className="mb-8 text-white" dangerouslySetInnerHTML={{ __html: project.content }}></p>
+        {/* <p className="mb-8 text-white" dangerouslySetInnerHTML={{ __html: project.content }}></p> */}
 
-        <section className="mb-8 text-white">
+        {/* <section className="mb-8 text-white">
           <h2 className="text-2xl font-bold mb-4">Sponsors</h2>
           <ul>
             <li>Start Your FREE Altium Trial</li>
@@ -123,14 +147,14 @@ const page = () => {
           <button className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white font-bold py-2 px-4 rounded">
             Buy Now
           </button>
-        </section>
+        </section> */}
 
-        <section className="mb-8 text-white">
-          <h2 className="text-2xl font-bold mb-4">Comments</h2>
-          {/* Implement your comment section here */}
-        </section>
+        {/* <section className="mb-8 text-white">
+          <h2 className="text-2xl font-bold mb-4">Comments</h2> */}
+        {/* Implement your comment section here */}
+        {/* </section> */}
 
-        <section className="mb-8 text-white">
+        {/* <section className="mb-8 text-white">
           <h2 className="text-2xl font-bold mb-4">Related Posts</h2>
           <ul>
             <li>
@@ -143,7 +167,7 @@ const page = () => {
               <Link href="/related-post-3">Related Project 3</Link>
             </li>
           </ul>
-        </section>
+        </section> */}
       </div>
     </section>
   );

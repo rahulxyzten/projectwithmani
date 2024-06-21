@@ -2,15 +2,8 @@ import { connectToDB } from "@/utils/database";
 import Project from "@/models/project";
 
 export const POST = async (req) => {
-  const {
-    title,
-    summary,
-    content,
-    category,
-    thumbnail,
-    youtubelink,
-    dateCreated,
-  } = await req.json();
+  const { title, summary, content, category, thumbnail, youtubelink } =
+    await req.json();
 
   try {
     await connectToDB();
@@ -24,7 +17,6 @@ export const POST = async (req) => {
         url: thumbnail.url,
       },
       youtubelink,
-      dateCreated,
     });
 
     await newProject.save();
