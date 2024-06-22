@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
 const links = [
@@ -34,6 +34,11 @@ const Filters = () => {
 
     router.push(`?${params.toString()}`, { scroll: false });
   };
+
+  useEffect(() => {
+    const category = searchParams.get("category") || "all";
+    setActive(category);
+  }, [searchParams]);
 
   return (
     <ul className="text-white-800 body-text no-scrollbar flex w-full max-w-full gap-2 overflow-auto pt-12 sm:max-w-2xl">

@@ -196,6 +196,15 @@
   }
 }
 
+.bg-gradient {
+  background: linear-gradient(to right, rgb(20, 30, 48), rgb(36, 59, 85));
+  box-shadow: rgb(0, 0, 0, 0.7) 5px 10px 50px, rgb(0, 0, 0, 0.7) -5px 0px 250px;
+  transition: all 0.3s ease-in-out;
+}
+.bg-gradient:hover {
+  box-shadow: rgb(0, 0, 0) 5px 10px 50px, rgb(0, 0, 0) -5px 0px 250px;
+}
+
 .text-gradient_purple-blue {
   background: linear-gradient(90deg, #4c73ff 0%, #73e0f8 100%);
   -webkit-background-clip: text;
