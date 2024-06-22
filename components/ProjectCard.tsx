@@ -1,5 +1,6 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 interface Props {
   id: string;
@@ -24,6 +25,7 @@ const ProjectCard = ({
   handleDelete,
 }: Props) => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   const handleEdit = async () => {
     router.push(`/update-project?id=${id}`);
@@ -46,27 +48,34 @@ const ProjectCard = ({
             alt="thumbnail"
           />
         </div>
-        <h3 onClick={handleBlog} className="text-2xl font-semibold leading-none tracking-tight body-semibold line-clamp-2 w-full pt-5 text-left text-white">
+        <h3
+          onClick={handleBlog}
+          className="text-2xl font-semibold leading-none tracking-tight body-semibold line-clamp-2 w-full pt-5 text-left text-white"
+        >
           {title}
         </h3>
       </div>
       <div className="mt-4 flex items-center justify-between gap-3 p-0">
-        {/* <p className="body-medium capitalize text-white-500">{category}</p> */}
-        <div className="flex-center gap-4">
-          <p
-            className="font-inter text-sm body-semibold text-gradient_blue-purple cursor-pointer"
-            onClick={handleEdit}
-          >
-            Edit
-          </p>
-          <p
-            className="font-inter text-sm body-semibold text-gradient_blue-purple cursor-pointer"
-            onClick={handleDelete}
-          >
-            Delete
-            {/* {deleting ? "Deleting..." : "Delete"} */}
-          </p>
-        </div>
+        {session?.user.isAdmin ? (
+          <div className="flex-center gap-4">
+            <p
+              className="font-inter text-sm body-semibold text-gradient_blue-purple cursor-pointer"
+              onClick={handleEdit}
+            >
+              Edit
+            </p>
+            <p
+              className="font-inter text-sm body-semibold text-gradient_blue-purple cursor-pointer"
+              onClick={handleDelete}
+            >
+              Delete
+              {/* {deleting ? "Deleting..." : "Delete"} */}
+            </p>
+          </div>
+        ) : (
+          <p className="body-medium capitalize text-white-500">{category}</p>
+        )}
+
         <p
           onClick={handleBlog}
           className="flex-center cursor-pointer text-gradient_purple-blue body-semibold gap-1.5"
