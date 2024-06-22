@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
+import SmoothScroll from "@/components/SmoothScroll";
 
 export const metadata: Metadata = {
   title: "Project With Mani",
@@ -12,10 +13,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
+    return (
     <html lang="en">
       <body className="dark min-h-screen bg-black-100 font-poppins">
-        <Providers>{children}</Providers>
+        <Providers><SmoothScroll>{children}</SmoothScroll></Providers>
       </body>
     </html>
   );
