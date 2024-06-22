@@ -57,35 +57,24 @@ const page = () => {
           </p>
         </div>
         <div className="flex flex-col space-y-3 px-4 pb-8 pt-5 sm:px-16">
-          <div className="flex space-x-2">
-            {providers &&
-              Object.values(providers).map((provider) => (
-                <button
-                  type="button"
-                  key={provider.name}
-                  onClick={() => handleLogin(provider)}
-                  className="group flex h-10 w-full items-center justify-center space-x-2 rounded-md border px-4 text-sm transition-all border-gray-400 bg-white-500 text-gray-600 hover:bg-gray-300"
-                >
-                  <FcGoogle className=" size-6" />
-                </button>
-              ))}
-            <button
-              type="button"
-              className="group flex h-10 w-full items-center justify-center space-x-2 rounded-md border px-4 text-sm transition-all border-gray-400 bg-white-500 text-gray-600 hover:bg-gray-300"
-            >
-              <FaGithub className=" size-6" />
-            </button>
-          </div>
-          <p className="text-center text-sm text-gray-500">
-            Don't have an account?
-            <Link
-              className="font-semibold text-gray-500 transition-colors hover:text-gray-400"
-              href="/register"
-            >
-              {" "}
-              Sign up
-            </Link>
-          </p>
+          {providers &&
+            Object.values(providers).map((provider) => (
+              <button
+                type="button"
+                key={provider.name}
+                onClick={() => handleLogin(provider)}
+                className="group flex h-10 w-full items-center justify-center space-x-2 rounded-md border px-4 text-sm transition-all border-gray-400 bg-white-500 text-gray-600 hover:bg-gray-300"
+              >
+                <FcGoogle className="mr-1.5 size-5" /> Continue with Google
+              </button>
+            ))}
+          <button
+            type="button"
+            className="group flex h-10 w-full items-center justify-center space-x-2 rounded-md border px-4 text-sm transition-all border-black bg-black text-white-400 hover:bg-white-500 hover:text-black hover:border-gray-400"
+          >
+            <FaGithub className="mr-1.5 size-5" />
+            Continue with GitHub
+          </button>
         </div>
       </div>
     </div>

@@ -57,7 +57,7 @@ module.exports = {
         orange: "#FF964B",
       },
       backgroundImage: {
-        banner: "url('/jsm_resources_banner.svg')",
+        banner: "url('/banner.svg')",
       },
       keyframes: {
         "accordion-down": {

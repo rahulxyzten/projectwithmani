@@ -110,7 +110,13 @@ const Feed = () => {
           </ul>
         )}
         <div className="mt-12 flex flex-col items-center">
-        <Image className="mb-4" src="/contact.png" alt="logo" width={500} height={500} />
+          <Image
+            className="mb-4"
+            src="/contact.png"
+            alt="logo"
+            width={500}
+            height={500}
+          />
 
           <a
             href="mailto:your-email@example.com"
