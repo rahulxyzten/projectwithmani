@@ -106,7 +106,7 @@ const Feed = () => {
         </div>
         {projects.length > 6 && (
           <ul className="body-regular text-white-400 mt-6">
-            <Link href="/tut">Click her to view more Projects</Link>
+            <Link href="/tutorials">Click her to view more Projects</Link>
           </ul>
         )}
         <div className="mt-12 flex flex-col items-center">

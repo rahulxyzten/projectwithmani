@@ -2,11 +2,32 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  signOut,
+  useSession,
+  getProviders,
+  ClientSafeProvider,
+} from "next-auth/react";
 
 const Navbar = () => {
+  const { data: session } = useSession();
+  const [providers, setProviders] = useState<Record<
+    string,
+    ClientSafeProvider
+  > | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuAnimation, setMenuAnimation] = useState("");
+  const [contentDropdown, setContentDropdown] = useState(false);
+
+  useEffect(() => {
+    const setUpProviders = async () => {
+      const response = await getProviders();
+
+      setProviders(response);
+    };
+    setUpProviders();
+  }, []);
 
   const toggleMobileMenu = () => {
     if (isMobileMenuOpen) {
@@ -46,7 +67,11 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`flex-center fixed top-0 z-50 w-full border-b-2 border-black-200 py-7 text-white ${isScrolled ? 'bg-black-100 bg-opacity-95' : 'bg-black-100'}`}>
+    <nav
+      className={`flex-center fixed top-0 z-50 w-full border-b-2 border-black-200 py-7 text-white ${
+        isScrolled ? "bg-black-100 bg-opacity-95" : "bg-black-100"
+      }`}
+    >
       <div className="flex-between mx-auto w-full max-w-screen-2xl px-6 xs:px-8 sm:px-16">
         <Link href="/">
           <Image src="/PWM.png" alt="logo" width={55} height={40} />
@@ -72,39 +97,79 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <button
-          onClick={toggleMobileMenu}
-          className="block md:hidden focus:outline-none"
-        >
-          <Image
-            src="/hamburger-menu.svg"
-            width={30}
-            height={30}
-            alt="Hamburger Menu"
-          />
-        </button>
-
-        <ul className="flex-center gap-x-3 max-md:hidden md:gap-x-5">
-          <li className="body-text text-gradient_blue-purple !font-bold">
-            
-            <Link href="/login">
-              Login
-            </Link>
-          </li>
-          <li className="body-text text-gradient_blue-purple !font-bold">
-            <Link href="/register">
-              Sign Up
-            </Link>
-          </li>
-          <li className="body-text text-gradient_blue-purple !font-bold">
-            <Link href="/create-project">Create Project</Link>
-          </li>
-          <li className="body-text text-gradient_blue-purple !font-bold">
-            <Link href="/create-post">Create Post</Link>
-          </li>
+        {/* Desktop Navigation */}
+        <ul className="flex-center gap-x-3 max-md:hidden md:gap-x-5 relative">
+          {session?.user ? (
+            <>
+              <li
+                className="body-text text-gradient_blue-purple !font-bold cursor-pointer"
+                onClick={() => signOut()}
+              >
+                Sign out
+              </li>
+              <li className="body-text text-gradient_blue-purple !font-bold cursor-pointer">
+                <Image
+                  src={session?.user.image || ""}
+                  width={37}
+                  height={37}
+                  className="rounded-full"
+                  alt="profile"
+                  onClick={() => setContentDropdown((prev) => !prev)}
+                />
+              </li>
+              {contentDropdown && (
+                <div className="absolute right-0 top-full mt-2 w-full p-5 rounded-lg bg-black-100 min-w-[210px] flex flex-col gap-2 justify-center items-center shadow-sm border border-black-400">
+                  <li className="body-text text-center text-white-800 !font-bold">
+                    <Link href="#">{session?.user?.name}</Link>
+                  </li>
+                  {session.user.isAdmin && (
+                    <>
+                      <li className="body-text text-gradient_blue-purple !font-bold">
+                        <Link
+                          href="/create-project"
+                          onClick={() => setContentDropdown((prev) => !prev)}
+                        >
+                          Create Project
+                        </Link>
+                      </li>
+                      <li className="body-text text-gradient_blue-purple !font-bold">
+                        <Link
+                          href="/create-post"
+                          onClick={() => setContentDropdown((prev) => !prev)}
+                        >
+                          Create Post
+                        </Link>
+                      </li>
+                    </>
+                  )}
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              <li className="body-text text-gradient_blue-purple !font-bold">
+                <Link href="/login">Login</Link>
+              </li>
+              <li className="body-text text-gradient_blue-purple !font-bold">
+                <Link href="/register">Sign Up</Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
 
+      {/* Mobile Navigation */}
+      <button
+        onClick={toggleMobileMenu}
+        className="block md:hidden absolute top-10 right-8 focus:outline-none"
+      >
+        <Image
+          src="/hamburger-menu.svg"
+          width={30}
+          height={30}
+          alt="Hamburger Menu"
+        />
+      </button>
       {isMobileMenuOpen && (
         <div
           className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-black-100 bg-opacity-99 text-center animate-${menuAnimation}`}
@@ -137,27 +202,43 @@ const Navbar = () => {
                 About
               </Link>
             </li>
-
-            <li className="body-text text-gradient_blue-purple !font-bold">
-              <Link href="#" onClick={handleLinkClick}>
-                Login
-              </Link>
-            </li>
-            <li className="body-text text-gradient_blue-purple !font-bold">
-              <Link href="#" onClick={handleLinkClick}>
-                Sign Up
-              </Link>
-            </li>
-            <li className="body-text text-gradient_blue-purple !font-bold">
-              <Link href="/create-project" onClick={handleLinkClick}>
-                Create Project
-              </Link>
-            </li>
-            <li className="body-text text-gradient_blue-purple !font-bold">
-              <Link href="/create-post" onClick={handleLinkClick}>
-                Create Post
-              </Link>
-            </li>
+            {session?.user ? (
+              <>
+                {session.user.isAdmin && (
+                  <>
+                    <li className="body-text text-gradient_blue-purple !font-bold">
+                      <Link href="/create-project" onClick={handleLinkClick}>
+                        Create Project
+                      </Link>
+                    </li>
+                    <li className="body-text text-gradient_blue-purple !font-bold">
+                      <Link href="/create-post" onClick={handleLinkClick}>
+                        Create Post
+                      </Link>
+                    </li>
+                  </>
+                )}
+                <li
+                  className="body-text text-gradient_blue-purple !font-bold cursor-pointer"
+                  onClick={() => signOut()}
+                >
+                  Sign out
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="body-text text-gradient_blue-purple !font-bold">
+                  <Link href="/login" onClick={handleLinkClick}>
+                    Login
+                  </Link>
+                </li>
+                <li className="body-text text-gradient_blue-purple !font-bold">
+                  <Link href="/register" onClick={handleLinkClick}>
+                    Sign Up
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       )}
