@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
+import SmoothScroll from "@/components/SmoothScroll";
 import { getSession } from "next-auth/react";
 import { ReactNode } from "react";
 
@@ -19,7 +20,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className="dark min-h-screen bg-black-100 font-poppins">
-        <Providers session={session}>{children}</Providers>
+        <Providers session={session}><SmoothScroll>{children}</SmoothScroll></Providers>
       </body>
     </html>
   );
