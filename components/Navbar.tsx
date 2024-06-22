@@ -148,10 +148,7 @@ const Navbar = () => {
           ) : (
             <>
               <li className="body-text text-gradient_blue-purple !font-bold">
-                <Link href="/login">Login</Link>
-              </li>
-              <li className="body-text text-gradient_blue-purple !font-bold">
-                <Link href="/register">Sign Up</Link>
+                <Link href="/login">Login/Signup</Link>
               </li>
             </>
           )}
@@ -229,12 +226,7 @@ const Navbar = () => {
               <>
                 <li className="body-text text-gradient_blue-purple !font-bold">
                   <Link href="/login" onClick={handleLinkClick}>
-                    Login
-                  </Link>
-                </li>
-                <li className="body-text text-gradient_blue-purple !font-bold">
-                  <Link href="/register" onClick={handleLinkClick}>
-                    Sign Up
+                    Login/Signup
                   </Link>
                 </li>
               </>
