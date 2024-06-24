@@ -20,7 +20,7 @@ const AllProjectsFeed = () => {
         `/api/project?category=${category}&query=${query}`
       );
       const data = await response.json();
-      setProjects(data);
+      setProjects(data.reverse());
     };
 
     fetchProjects();

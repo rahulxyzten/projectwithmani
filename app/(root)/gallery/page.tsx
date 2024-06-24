@@ -12,7 +12,7 @@ const page = () => {
     const fetchProjects = async () => {
       const response = await fetch("api/gallery");
       const data = await response.json();
-      setPosts(data);
+      setPosts(data.reverse());
     };
 
     fetchProjects();
@@ -29,7 +29,7 @@ const page = () => {
           This projects are made by creators who learnt from my Tutorials
         </h1>
         <Link href="https://forms.gle/your-google-form-link" passHref>
-          <button className="bg-purple hover:bg-pink translation duration-500 text-white font-bold py-2 px-4 rounded mb-8">
+          <button className="bg-purple hover:bg-pink translation duration-500 text-white font-bold py-2 px-4 rounded mb-8 active:scale-95">
             Upload your Project Image
           </button>
         </Link>
@@ -46,7 +46,7 @@ const page = () => {
         {visibleCount < posts.length && (
           <button
             onClick={handleLoadMore}
-            className="bg-purple hover:bg-pink translation duration-500 text-white font-bold py-2 px-4 rounded my-8"
+            className="bg-purple hover:bg-pink translation duration-500 text-white font-bold py-2 px-4 rounded my-8 active:scale-95"
           >
             Load More
           </button>

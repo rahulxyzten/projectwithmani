@@ -253,7 +253,6 @@
   border-bottom-right-radius: 0.5em;
   color: #fff;
   min-height: 18em;
-  /* border: 2px solid #ccc; */
 }
 
 .ql-snow.ql-toolbar {
@@ -261,10 +260,29 @@
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
   background: #eaecec;
-  /* border: 2px solid #ccc; */
 }
 
-/* .ql-container .ql-editor.ql-blank::before {
-  color: white;
-  font-family: "Poppins", sans-serif;
-} */
+/* blog page content  */
+.blog-content h1 {
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
+
+.blog-content h2 {
+  font-size: 1.75em;
+  margin-bottom: 0.5em;
+}
+
+.blog-content h3 {
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.blog-content ol {
+  list-style-type: decimal;
+  margin-left: 2em;
+}
+
+.blog-content ol li {
+  margin-bottom: 0.5em;
+}

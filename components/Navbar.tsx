@@ -120,7 +120,7 @@ const Navbar = () => {
               {contentDropdown && (
                 <div className="absolute right-0 top-full mt-2 w-full p-5 rounded-lg bg-black-100 min-w-[210px] flex flex-col gap-2 justify-center items-center shadow-sm border border-black-400">
                   <li className="body-text text-center text-white-800 !font-bold">
-                    <Link href="#">{session?.user?.name}</Link>
+                    <p>{session?.user?.name}</p>
                   </li>
                   {session.user.isAdmin && (
                     <>

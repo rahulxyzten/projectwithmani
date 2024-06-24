@@ -9,9 +9,11 @@ interface Project {
   title: string;
   summary: string;
   category: string;
+  projectPrice: number;
   content: string;
   thumbnail: File;
   youtubelink: string;
+  sourceCodelink: string;
 }
 
 interface Props {
@@ -78,25 +80,40 @@ const Form = ({
               setProject({ ...project, summary: e.target.value })
             }
           />
-          <Select
-            variant="underlined"
-            label="Select an category :"
-            className="max-w-xs mb-5 text-white"
-            value={project.category}
-            selectedKeys={new Set(selectedKeys)}
-            onSelectionChange={(keys) =>
-              setSelectedKeys(Array.from(keys) as string[])
-            }
-            onChange={(e) =>
-              setProject({ ...project, category: e.target.value })
-            }
-          >
-            {items.map((item) => (
-              <SelectItem className="text-white" key={item} value={item}>
-                {item}
-              </SelectItem>
-            ))}
-          </Select>
+          <div className="flex flex-col md:flex-row justify-start md:gap-20">
+            <Select
+              variant="underlined"
+              label="Select an category :"
+              className="max-w-xs mb-5 text-white"
+              value={project.category}
+              selectedKeys={new Set(selectedKeys)}
+              onSelectionChange={(keys) =>
+                setSelectedKeys(Array.from(keys) as string[])
+              }
+              onChange={(e) =>
+                setProject({ ...project, category: e.target.value })
+              }
+            >
+              {items.map((item) => (
+                <SelectItem className="text-white" key={item} value={item}>
+                  {item}
+                </SelectItem>
+              ))}
+            </Select>
+            <Input
+              type="number"
+              className="mb-5 max-w-xs"
+              variant="underlined"
+              label="Project price :"
+              value={project.projectPrice.toString()}
+              onChange={(e) =>
+                setProject({
+                  ...project,
+                  projectPrice: parseFloat(e.target.value),
+                })
+              }
+            />
+          </div>
 
           <p className="mb-2 ml-1 text-sm text-gray-200">Content :</p>
           <Editor
@@ -125,6 +142,17 @@ const Form = ({
             value={project.youtubelink}
             onChange={(e) =>
               setProject({ ...project, youtubelink: e.target.value })
+            }
+          />
+
+          <Input
+            type="url"
+            className="mb-5 "
+            variant="underlined"
+            label="Source code link :"
+            value={project.sourceCodelink}
+            onChange={(e) =>
+              setProject({ ...project, sourceCodelink: e.target.value })
             }
           />
 

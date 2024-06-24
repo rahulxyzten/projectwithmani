@@ -9,21 +9,10 @@ import Filters from "./Filters";
 import Header from "./Header";
 import ProjectCard from "./ProjectCard";
 
-interface Project {
-  _id: string;
-  title: string;
-  summary: string;
-  category: string;
-  content: string;
-  thumbnail: object;
-  youtubelink: string;
-}
-
 const Feed = () => {
   const searchParams = useSearchParams();
 
   const [projects, setProjects] = useState<any[]>([]);
-  // const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -33,7 +22,7 @@ const Feed = () => {
         `/api/project?category=${category}&query=${query}`
       );
       const data = await response.json();
-      setProjects(data);
+      setProjects(data.reverse());
     };
 
     fetchProjects();
@@ -41,30 +30,6 @@ const Feed = () => {
 
   const query = searchParams.get("query") || "";
   const category = searchParams.get("category") || "all";
-
-  const handleDelete = async (project: Project) => {
-    const hasConfirmed = confirm(
-      "Are you sure you want to delete this prompt?"
-    );
-
-    if (hasConfirmed) {
-      // setDeleting(true);
-      try {
-        await fetch(`/api/project/${project._id.toString()}`, {
-          method: "DELETE",
-        });
-
-        const filteredPosts = projects.filter((p) => p._id !== project._id);
-
-        setProjects(filteredPosts);
-      } catch (error) {
-        console.log(error);
-      }
-      //  finally {
-      // setDeleting(false);
-      // }
-    }
-  };
 
   return (
     <>
@@ -86,27 +51,31 @@ const Feed = () => {
         )}
         <div className="mt-12 flex w-full flex-wrap justify-center gap-10 sm:justify-start">
           {projects?.length > 0 ? (
-            projects.slice(0, 6).map((project: any) => (
-              <ProjectCard
-                key={project._id}
-                id={project._id}
-                title={project.title}
-                summary={project.summary}
-                content={project.content}
-                category={project.category}
-                imgUrl={project.thumbnail?.url}
-                youtubeLink={project.youtubelink}
-                handleDelete={() => handleDelete(project)}
-                // deleting = {deleting}
-              />
-            ))
+            projects
+              .slice(0, 6)
+              .map((project: any) => (
+                <ProjectCard
+                  key={project._id}
+                  id={project._id}
+                  title={project.title}
+                  summary={project.summary}
+                  content={project.content}
+                  category={project.category}
+                  imgUrl={project.thumbnail?.url}
+                  youtubeLink={project.youtubelink}
+                />
+              ))
           ) : (
             <p className="body-regular text-white-400">No projects found</p>
           )}
         </div>
-        {projects.length > 6 && (
+        {projects.length >= 6 && (
           <ul className="body-regular text-white-400 mt-6">
-            <Link href="/tutorials">Click her to view more Projects</Link>
+            <Link
+              href={{ pathname: "/tutorials", query: { category: category } }}
+            >
+              Click her to view more Projects
+            </Link>
           </ul>
         )}
         <div className="mt-12 flex flex-col items-center">

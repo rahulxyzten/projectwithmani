@@ -17,6 +17,10 @@ const ProjectSchema = new Schema({
     type: String,
     required: [true, "Category is required."],
   },
+  projectPrice: {
+    type: String,
+    required: [true, "Category is required."],
+  },
   thumbnail: {
     public_id: {
       type: String,
@@ -28,6 +32,10 @@ const ProjectSchema = new Schema({
     },
   },
   youtubelink: {
+    type: String,
+    required: [true, "Youtube Link is required."],
+  },
+  sourceCodelink: {
     type: String,
     required: [true, "Youtube Link is required."],
   },

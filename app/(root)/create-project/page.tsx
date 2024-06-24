@@ -2,15 +2,18 @@
 
 import React, { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import Form from "@/components/Form";
 
 interface Project {
   title: string;
   summary: string;
   category: string;
+  projectPrice: number;
   content: string;
   thumbnail: File;
   youtubelink: string;
+  sourceCodelink: string;
 }
 
 interface Props {
@@ -23,16 +26,24 @@ interface Props {
 
 const page = () => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   const [submitting, setSubmitting] = useState(false);
   const [project, setProject] = useState({
     title: "",
     summary: "",
     category: "",
+    projectPrice: 0,
     content: "",
     thumbnail: {} as File,
     youtubelink: "",
+    sourceCodelink: "",
   });
+
+  if (!session) {
+    router.push("/login");
+    return;
+  }
 
   const createProject = async (e: FormEvent) => {
     e.preventDefault();
@@ -73,11 +84,13 @@ const page = () => {
             summary: project.summary,
             content: project.content,
             category: project.category,
+            projectPrice: project.projectPrice,
             thumbnail: {
               public_id: imagePublicId,
               url: imageUrl,
             },
             youtubelink: project.youtubelink,
+            sourceCodelink: project.sourceCodelink,
           }),
         });
 

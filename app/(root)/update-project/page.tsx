@@ -2,10 +2,12 @@
 
 import React, { useState, useEffect, FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 import Form from "@/components/Form";
 
 const page = () => {
   const router = useRouter();
+  const { data: session } = useSession();
   const searchParams = useSearchParams();
   const projectId = searchParams.get("id");
 
@@ -14,10 +16,17 @@ const page = () => {
     title: "",
     summary: "",
     category: "",
+    projectPrice: 0,
     content: "",
     thumbnail: {} as File,
     youtubelink: "",
+    sourceCodelink: "",
   });
+
+  if (!session) {
+    router.push("/login");
+    return;
+  }
 
   useEffect(() => {
     const getProjectDetails = async () => {
@@ -27,9 +36,11 @@ const page = () => {
         title: data.title,
         summary: data.summary,
         category: data.category,
+        projectPrice: data.projectPrice,
         content: data.content,
         thumbnail: {} as File,
         youtubelink: data.youtubelink,
+        sourceCodelink: data.sourceCodelink,
       });
     };
 
@@ -79,11 +90,13 @@ const page = () => {
           summary: project.summary,
           content: project.content,
           category: project.category,
+          projectPrice: project.projectPrice,
           thumbnail: {
             public_id: imagePublicId,
             url: imageUrl,
           },
           youtubelink: project.youtubelink,
+          sourceCodelink: project.sourceCodelink,
         }),
       });
 

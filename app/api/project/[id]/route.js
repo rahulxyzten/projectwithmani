@@ -18,8 +18,16 @@ export const GET = async (request, { params }) => {
 
 // PATCH (update)
 export const PATCH = async (req, { params }) => {
-  const { title, summary, content, category, thumbnail, youtubelink } =
-    await req.json();
+  const {
+    title,
+    summary,
+    content,
+    category,
+    projectPrice,
+    thumbnail,
+    youtubelink,
+    sourceCodelink,
+  } = await req.json();
 
   try {
     await connectToDB();
@@ -33,7 +41,9 @@ export const PATCH = async (req, { params }) => {
       existingProject.summary = summary;
       existingProject.content = content;
       existingProject.category = category;
+      existingProject.projectPrice = projectPrice;
       existingProject.youtubelink = youtubelink;
+      existingProject.sourceCodelink = sourceCodelink;
     }
 
     if (thumbnail.public_id) {
