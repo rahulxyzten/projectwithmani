@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import Form from "@/components/Form";
 
 interface Project {
@@ -26,7 +25,6 @@ interface Props {
 
 const page = () => {
   const router = useRouter();
-  const { data: session, status } = useSession();
 
   const [submitting, setSubmitting] = useState(false);
   const [project, setProject] = useState({
@@ -39,12 +37,6 @@ const page = () => {
     youtubelink: "",
     sourceCodelink: "",
   });
-
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    }
-  }, [status, router]);
 
   const createProject = async (e: FormEvent) => {
     e.preventDefault();

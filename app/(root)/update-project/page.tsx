@@ -2,12 +2,10 @@
 
 import React, { useState, useEffect, FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useSession } from "next-auth/react";
 import Form from "@/components/Form";
 
 const page = () => {
   const router = useRouter();
-  const { data: session, status } = useSession();
   const searchParams = useSearchParams();
   const projectId = searchParams.get("id");
 
@@ -22,12 +20,6 @@ const page = () => {
     youtubelink: "",
     sourceCodelink: "",
   });
-
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    }
-  }, [status, router]);
 
   useEffect(() => {
     const getProjectDetails = async () => {
