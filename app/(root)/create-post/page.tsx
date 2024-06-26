@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, FormEvent } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import PostForm from "@/components/PostForm";
@@ -21,7 +21,7 @@ interface Props {
 
 const page = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
@@ -30,10 +30,11 @@ const page = () => {
     cover: {} as File,
   });
 
-  if (!session) {
-    router.push("/login");
-    return;
-  }
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status, router]);
 
   const createPost = async (e: FormEvent) => {
     e.preventDefault();
@@ -92,12 +93,12 @@ const page = () => {
 
   return (
     <PostForm
-    type="Create"
-    post={post}
-    setPost={setPost}
-    submitting={submitting}
-    handleSubmit={createPost}
-  />
+      type="Create"
+      post={post}
+      setPost={setPost}
+      submitting={submitting}
+      handleSubmit={createPost}
+    />
   );
 };
 

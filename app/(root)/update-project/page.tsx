@@ -7,7 +7,7 @@ import Form from "@/components/Form";
 
 const page = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const searchParams = useSearchParams();
   const projectId = searchParams.get("id");
 
@@ -23,10 +23,11 @@ const page = () => {
     sourceCodelink: "",
   });
 
-  if (!session) {
-    router.push("/login");
-    return;
-  }
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status, router]);
 
   useEffect(() => {
     const getProjectDetails = async () => {
