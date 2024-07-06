@@ -26,7 +26,7 @@ interface Project {
   sourceCodelink: string;
 }
 
-const page = () => {
+const PageContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const projectId = searchParams.get("id");
@@ -105,109 +105,108 @@ const page = () => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <section className="paddings mx-auto w-full max-w-screen-2xl flex-col">
-        <div className="mb-4 mt-24  px-8 sm:px-14 md:px-20 lg:px-40 md:mb-0 w-full mx-auto relative">
-          <div className="flex flex-col justify-center mb-12">
-            <h2 className="text-2xl sm:text-4xl font-semibold text-white-800 leading-tight">
-              {project.title}
-            </h2>
-            <div className="flex items-center justify-center mt-8">
-              <Image
-                src={project.thumbnailUrl}
-                alt="project thumbnai"
-                width={600}
-                height={600}
-                className="object-cover rounded"
-              />
-            </div>
-            {session?.user.isAdmin && (
-              <div className="flex justify-center items-center gap-2">
-                <button
-                  onClick={handleEdit}
-                  className="bg-purple hover:bg-pink translation duration-500 text-white font-bold py-2 px-6 rounded my-8 active:scale-95"
-                >
-                  Edit this project
-                </button>
-                <button
-                  onClick={() => handleDelete(project)}
-                  className="bg-purple hover:bg-pink translation duration-500 text-white font-bold py-2 px-6 rounded my-8 active:scale-95"
-                >
-                  Delete this project
-                </button>
-              </div>
-            )}
+    <section className="paddings mx-auto w-full max-w-screen-2xl flex-col">
+      <div className="mb-4 mt-24  px-8 sm:px-14 md:px-20 lg:px-40 md:mb-0 w-full mx-auto relative">
+        <div className="flex flex-col justify-center mb-12">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-white-800 leading-tight">
+            {project.title}
+          </h2>
+          <div className="flex items-center justify-center mt-8">
+            <Image
+              src={project.thumbnailUrl}
+              alt="project thumbnai"
+              width={600}
+              height={600}
+              className="object-cover rounded"
+            />
           </div>
-
-          <div className="flex-col justify-center mb-12">
-            <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight text-gradient_purple-blue ">
-              YouTube Tutorial:-
-            </h2>
-            <div className="flex justify-center mt-8 items-center rounded">
-              <iframe
-                width="800"
-                height="450"
-                src={`https://www.youtube.com/embed/${videoID}`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </div>
-
-          <div className="flex-col justify-center mb-8">
-            <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight text-gradient_purple-blue ">
-              Content:-
-            </h2>
-            <div
-              className=" p-1 sm:p-5 text-white blog-content"
-              dangerouslySetInnerHTML={{ __html: project.content }}
-            ></div>
-          </div>
-
-          <div className="flex-col justify-center items-center mb-8">
-            <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight text-gradient_purple-blue ">
-              Code:-
-            </h2>
-            {/* <div className="flex flex-col justify-center items-center p-5 mt-4 rounded-lg  shadow-sm border hover:border-2 border-black-400"> */}
-            <div className="flex flex-col justify-start p-5">
-              <p className="text-white">Price: {project.projectPrice}</p>
-              <button className="bg-purple w-32 hover:bg-pink translation duration-500 text-white font-bold py-2 px-4 mt-2 rounded active:scale-95">
-                Buy Now
+          {session?.user.isAdmin && (
+            <div className="flex justify-center items-center gap-2">
+              <button
+                onClick={handleEdit}
+                className="bg-purple hover:bg-pink translation duration-500 text-white font-bold py-2 px-6 rounded my-8 active:scale-95"
+              >
+                Edit this project
+              </button>
+              <button
+                onClick={() => handleDelete(project)}
+                className="bg-purple hover:bg-pink translation duration-500 text-white font-bold py-2 px-6 rounded my-8 active:scale-95"
+              >
+                Delete this project
               </button>
             </div>
-          </div>
+          )}
         </div>
-        <div className="flex mx-5 flex-col justify-start">
+
+        <div className="flex-col justify-center mb-12">
           <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight text-gradient_purple-blue ">
-            Related Post:-
+            YouTube Tutorial:-
           </h2>
-          <div className="mt-6 flex flex-wrap justify-center gap-2 sm:justify-start">
-            {relatedProjects?.length > 1 ? (
-              relatedProjects
-                .filter(
-                  (relatedProject: any) => relatedProject._id !== project.id
-                )
-                .slice(0, 3)
-                .map((project: any) => (
-                  <ProjectCard
-                    key={project._id}
-                    id={project._id}
-                    title={project.title}
-                    summary={project.summary}
-                    content={project.content}
-                    category={project.category}
-                    imgUrl={project.thumbnail?.url}
-                    youtubeLink={project.youtubelink}
-                  />
-                ))
-            ) : (
-              <p className="body-regular text-white-400">
-                No related projects found
-              </p>
-            )}
+          <div className="flex justify-center mt-8 items-center rounded">
+            <iframe
+              width="800"
+              height="450"
+              src={`https://www.youtube.com/embed/${videoID}`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
-        {/* <div className="mb-4 mt-10 px-40 md:mb-0 w-full mx-auto relative">
+
+        <div className="flex-col justify-center mb-8">
+          <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight text-gradient_purple-blue ">
+            Content:-
+          </h2>
+          <div
+            className=" p-1 sm:p-5 text-white blog-content"
+            dangerouslySetInnerHTML={{ __html: project.content }}
+          ></div>
+        </div>
+
+        <div className="flex-col justify-center items-center mb-8">
+          <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight text-gradient_purple-blue ">
+            Code:-
+          </h2>
+          {/* <div className="flex flex-col justify-center items-center p-5 mt-4 rounded-lg  shadow-sm border hover:border-2 border-black-400"> */}
+          <div className="flex flex-col justify-start p-5">
+            <p className="text-white">Price: {project.projectPrice}</p>
+            <button className="bg-purple w-32 hover:bg-pink translation duration-500 text-white font-bold py-2 px-4 mt-2 rounded active:scale-95">
+              Buy Now
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="flex mx-5 flex-col justify-start">
+        <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight text-gradient_purple-blue ">
+          Related Post:-
+        </h2>
+        <div className="mt-6 flex flex-wrap justify-center gap-2 sm:justify-start">
+          {relatedProjects?.length > 1 ? (
+            relatedProjects
+              .filter(
+                (relatedProject: any) => relatedProject._id !== project.id
+              )
+              .slice(0, 3)
+              .map((project: any) => (
+                <ProjectCard
+                  key={project._id}
+                  id={project._id}
+                  title={project.title}
+                  summary={project.summary}
+                  content={project.content}
+                  category={project.category}
+                  imgUrl={project.thumbnail?.url}
+                  youtubeLink={project.youtubelink}
+                />
+              ))
+          ) : (
+            <p className="body-regular text-white-400">
+              No related projects found
+            </p>
+          )}
+        </div>
+      </div>
+      {/* <div className="mb-4 mt-10 px-40 md:mb-0 w-full mx-auto relative">
         <div className="flex-col justify-center mb-12">
           <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight text-gradient_purple-blue ">
             Comments:-
@@ -224,7 +223,14 @@ const page = () => {
           </div>
         </div>
       </div> */}
-      </section>
+    </section>
+  );
+};
+
+const page = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PageContent />
     </Suspense>
   );
 };

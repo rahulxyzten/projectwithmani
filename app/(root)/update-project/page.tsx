@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useState, useEffect, FormEvent, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Form from "@/components/Form";
 
-const page = () => {
+const PageContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const projectId = searchParams.get("id");
@@ -111,6 +111,14 @@ const page = () => {
       submitting={submitting}
       handleSubmit={updateProject}
     />
+  );
+};
+
+const page = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PageContent />
+    </Suspense>
   );
 };
 

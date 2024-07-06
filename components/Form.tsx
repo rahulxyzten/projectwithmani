@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import dynamic from 'next/dynamic';
 import "react-quill/dist/quill.snow.css";
-import Editor from "./Editor";
 import { Input } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/react";
+const Editor = dynamic(() => import('./Editor'), { ssr: false });
 
 interface Project {
   title: string;

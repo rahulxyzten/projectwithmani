@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import SearchForm from "@/components/SearchForm";
 import Filters from "@/components/Filters";
@@ -68,4 +68,12 @@ const AllProjectsFeed = () => {
   );
 };
 
-export default AllProjectsFeed;
+const page = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AllProjectsFeed />
+    </Suspense>
+  );
+};
+
+export default page;
