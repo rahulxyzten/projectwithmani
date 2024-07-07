@@ -27,7 +27,7 @@ const Navbar = () => {
       setProviders(response);
     };
     setUpProviders();
-  }, []);
+  }, [session]);
 
   const toggleMobileMenu = () => {
     if (isMobileMenuOpen) {

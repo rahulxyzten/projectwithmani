@@ -21,13 +21,14 @@ const handler = NextAuth({
           email: session.user.email,
         });
 
-        session.user.id = sessionUser._id.toString();
+        if (sessionUser) {
+          session.user.id = sessionUser._id.toString();
+          const isAdmin = await Admin.findOne({
+            email: session.user.email,
+          });
 
-        const isAdmin = await Admin.findOne({
-          email: session.user.email,
-        });
-
-        session.user.isAdmin = !!isAdmin;
+          session.user.isAdmin = !!isAdmin;
+        }
 
         return session;
       } catch (error) {
