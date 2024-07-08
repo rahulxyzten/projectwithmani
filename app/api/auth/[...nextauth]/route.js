@@ -6,6 +6,13 @@ import Admin from "@/models/admin";
 import { connectToDB } from "@/utils/database";
 
 const handler = NextAuth({
+  session: {
+    jwt: true,
+  },
+  jwt: {
+    secret: process.env.NEXTAUTH_SECRET,
+  },
+
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,

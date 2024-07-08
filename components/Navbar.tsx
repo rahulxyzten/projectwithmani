@@ -98,7 +98,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <ul className="flex-center gap-x-3 max-md:hidden md:gap-x-5 relative">
+        <ul className="flex-center gap-x-3 max-md:hidden relative">
           {session?.user ? (
             <>
               <li
