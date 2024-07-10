@@ -1,12 +1,10 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import GalleryCard from "@/components/GalleryCard";
 
-const PageContent = () => {
-  const searchParams = useSearchParams();
+const page = () => {
   const [posts, setPosts] = useState<any[]>([]);
   const [visibleCount, setVisibleCount] = useState(8);
 
@@ -14,11 +12,12 @@ const PageContent = () => {
     const fetchProjects = async () => {
       const response = await fetch("api/gallery");
       const data = await response.json();
+      console.log(data);
       setPosts(data.reverse());
     };
 
     fetchProjects();
-  }, [searchParams]);
+  }, []);
 
   const handleLoadMore = () => {
     setVisibleCount((prevCount) => prevCount + 8);
@@ -55,14 +54,6 @@ const PageContent = () => {
         )}
       </div>
     </section>
-  );
-};
-
-const page = () => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <PageContent />
-    </Suspense>
   );
 };
 
