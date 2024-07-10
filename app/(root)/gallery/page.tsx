@@ -5,56 +5,27 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import GalleryCard from "@/components/GalleryCard";
 
-interface Post {
-  title: string;
-  username: string;
-  cover: {
-    url: string;
-    public_id: string;
-  };
-}
-
 const PageContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [posts, setPosts] = useState<any[]>([]);
   const [visibleCount, setVisibleCount] = useState(8);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      const response = await fetch("api/gallery");
-      const data = await response.json();
-      console.log(data);
-      setPosts(data.reverse());
-    };
+  const fetchProjects = async () => {
+    const response = await fetch("api/gallery", {
+      headers: {
+        "Cache-Control":
+          "no-store, no-cache, must-revalidate, proxy-revalidate",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+    setPosts(data.reverse());
+  };
 
+  useEffect(() => {
     fetchProjects();
   }, []);
-
-  useEffect(() => {
-    const newPostTitle = searchParams.get("newPostTitle") || "";
-    const newPostUsername = searchParams.get("newPostUsername") || "";
-    const newPostImageUrl = searchParams.get("newPostImageUrl") || "";
-    const newPostImagePublicId = searchParams.get("newPostImagePublicId") || "";
-
-    if (
-      newPostTitle &&
-      newPostUsername &&
-      newPostImageUrl &&
-      newPostImagePublicId
-    ) {
-      const newPost: Post = {
-        title: newPostTitle,
-        username: newPostUsername,
-        cover: {
-          url: newPostImageUrl,
-          public_id: newPostImagePublicId,
-        },
-      };
-
-      setPosts((prevPosts) => [newPost, ...prevPosts]);
-    }
-  }, [searchParams]);
 
   const handleLoadMore = () => {
     setVisibleCount((prevCount) => prevCount + 8);
