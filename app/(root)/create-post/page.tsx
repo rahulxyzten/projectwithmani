@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, FormEvent } from "react";
+import React, { useState,useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import PostForm from "@/components/PostForm";
 
 interface Post {
@@ -20,6 +21,7 @@ interface Props {
 
 const page = () => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   const [submitting, setSubmitting] = useState(false);
   const [post, setPost] = useState({
@@ -27,6 +29,12 @@ const page = () => {
     username: "",
     cover: {} as File,
   });
+
+  useEffect(() => {
+    if (!session?.user || !session.user.isAdmin) {
+      router.push("/");
+    }
+  }, [session, router]);
 
   const createPost = async (e: FormEvent) => {
     e.preventDefault();

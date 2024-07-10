@@ -2,10 +2,12 @@
 
 import React, { useState, useEffect, FormEvent, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 import Form from "@/components/Form";
 
 const PageContent = () => {
   const router = useRouter();
+  const { data: session } = useSession();
   const searchParams = useSearchParams();
   const projectId = searchParams.get("id");
 
@@ -20,6 +22,12 @@ const PageContent = () => {
     youtubelink: "",
     sourceCodelink: "",
   });
+
+  useEffect(() => {
+    if (!session?.user || !session.user.isAdmin) {
+      router.push("/");
+    }
+  }, [session, router]);
 
   useEffect(() => {
     const getProjectDetails = async () => {
