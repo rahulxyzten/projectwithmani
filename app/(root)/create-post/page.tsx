@@ -73,8 +73,14 @@ const page = () => {
         });
 
         if (response.ok) {
-          router.refresh();
-          router.push("/gallery");
+          const params = new URLSearchParams({
+            newPostTitle: post.title,
+            newPostUsername: post.username,
+            newPostImageUrl: imageUrl,
+            newPostImagePublicId: imagePublicId,
+          });
+
+          router.push(`/gallery?${params.toString()}`);
         }
       }
     } catch (error) {
