@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import GalleryCard from "@/components/GalleryCard";
 
-const page = () => {
+const PageContent = () => {
   const searchParams = useSearchParams();
   const [posts, setPosts] = useState<any[]>([]);
   const [visibleCount, setVisibleCount] = useState(8);
@@ -55,6 +55,14 @@ const page = () => {
         )}
       </div>
     </section>
+  );
+};
+
+const page = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PageContent />
+    </Suspense>
   );
 };
 
