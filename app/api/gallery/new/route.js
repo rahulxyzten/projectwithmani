@@ -17,18 +17,8 @@ export const POST = async (req) => {
 
     await newPost.save();
 
-    return new Response(JSON.stringify(newPost), {
-      status: 201,
-      headers: {
-        "Cache-Control": "no-store",
-      },
-    });
+    return new Response(JSON.stringify(newPost), { status: 201 });
   } catch (error) {
-    return new Response("Failed to create a new project", {
-      status: 500,
-      headers: {
-        "Cache-Control": "no-store",
-      },
-    });
+    return new Response("Failed to create a new project", { status: 500 });
   }
 };
