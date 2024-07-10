@@ -4,10 +4,10 @@ import { FaTwitter, FaLinkedin, FaYoutube, FaGithub } from "react-icons/fa";
 
 const page = () => {
   return (
-    <section className="pt-[150px] flex w-full flex-col items-center">
-      <h1 className="text-4xl font-bold text-center text-white py-5">
-        About Us
-      </h1>
+    <section className="pt-[130px] flex w-full flex-col items-center">
+      {/* <h1 className="text-4xl font-bold text-center text-white-800 py-5">
+        About us 
+      </h1> */}
 
       <div className="flex flex-col items-center ">
         <Image

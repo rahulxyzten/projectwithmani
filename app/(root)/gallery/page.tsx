@@ -1,13 +1,10 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import GalleryCard from "@/components/GalleryCard";
 
-const PageContent = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+const page = () => {
   const [posts, setPosts] = useState<any[]>([]);
   const [visibleCount, setVisibleCount] = useState(8);
 
@@ -19,7 +16,6 @@ const PageContent = () => {
       },
     });
     const data = await response.json();
-    console.log(data);
     setPosts(data.reverse());
   };
 
@@ -62,14 +58,6 @@ const PageContent = () => {
         )}
       </div>
     </section>
-  );
-};
-
-const page = () => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <PageContent />
-    </Suspense>
   );
 };
 

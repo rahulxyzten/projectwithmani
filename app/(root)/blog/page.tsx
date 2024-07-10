@@ -108,7 +108,7 @@ const PageContent = () => {
     <section className="paddings mx-auto w-full max-w-screen-2xl flex-col">
       <div className="mb-4 mt-24  px-8 sm:px-14 md:px-20 lg:px-40 md:mb-0 w-full mx-auto relative">
         <div className="flex flex-col justify-center mb-12">
-          <h2 className="text-2xl sm:text-4xl font-semibold text-white-800 leading-tight">
+          <h2 className="text-2xl sm:text-4xl font-semibold text-gradient_purple-blue leading-tight">
             {project.title}
           </h2>
           <div className="flex items-center justify-center mt-8">
@@ -139,7 +139,7 @@ const PageContent = () => {
         </div>
 
         <div className="flex-col justify-center mb-12">
-          <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight text-gradient_purple-blue ">
+          <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
             YouTube Tutorial:-
           </h2>
           <div className="flex justify-center mt-8 items-center rounded">
@@ -154,7 +154,7 @@ const PageContent = () => {
         </div>
 
         <div className="flex-col justify-center mb-8">
-          <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight text-gradient_purple-blue ">
+          <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
             Content:-
           </h2>
           <div
@@ -164,20 +164,24 @@ const PageContent = () => {
         </div>
 
         <div className="flex-col justify-center items-center mb-8">
-          <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight text-gradient_purple-blue ">
+          <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
             Code:-
           </h2>
           {/* <div className="flex flex-col justify-center items-center p-5 mt-4 rounded-lg  shadow-sm border hover:border-2 border-black-400"> */}
-          <div className="flex flex-col justify-start p-5">
+          <div className="flex flex-col justify-start p-5 ">
             <p className="text-white">Price: {project.projectPrice}</p>
-            <button className="bg-purple w-32 hover:bg-pink translation duration-500 text-white font-bold py-2 px-4 mt-2 rounded active:scale-95">
+            <button
+              // onClick={() => handlePayment(project.projectPrice, project.id)}
+              className="bg-purple w-32 hover:bg-pink transition duration-500 text-white font-bold py-2 px-4 mt-2 rounded active:scale-95"
+            >
               Buy Now
             </button>
           </div>
         </div>
       </div>
+
       <div className="flex mx-5 flex-col justify-start">
-        <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight text-gradient_purple-blue ">
+        <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
           Related Post:-
         </h2>
         <div className="mt-6 flex flex-wrap justify-center gap-2 sm:justify-start">
@@ -206,6 +210,7 @@ const PageContent = () => {
           )}
         </div>
       </div>
+
       {/* <div className="mb-4 mt-10 px-40 md:mb-0 w-full mx-auto relative">
         <div className="flex-col justify-center mb-12">
           <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight text-gradient_purple-blue ">
