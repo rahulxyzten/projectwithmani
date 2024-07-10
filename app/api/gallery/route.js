@@ -7,10 +7,14 @@ export const GET = async (request) => {
 
     const galleryProjects = await Gallery.find({});
 
-    return new Response(JSON.stringify(galleryProjects), { status: 200 });
+    return new Response(JSON.stringify(galleryProjects), {
+      status: 200,
+      headers: { "Cache-Control": "no-store, max-age=0" },
+    });
   } catch (error) {
     return new Response("Failed to fetch all gallery Projects", {
       status: 500,
+      headers: { "Cache-Control": "no-store, max-age=0" },
     });
   }
 };

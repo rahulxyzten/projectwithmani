@@ -73,6 +73,7 @@ const page = () => {
         });
 
         if (response.ok) {
+          router.refresh();
           router.push("/gallery");
         }
       }
