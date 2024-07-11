@@ -105,8 +105,8 @@ const PageContent = () => {
   };
 
   return (
-    <section className="paddings mx-auto w-full max-w-screen-2xl flex-col">
-      <div className="mb-4 mt-24  px-8 sm:px-14 md:px-20 lg:px-40 md:mb-0 w-full mx-auto relative">
+    <section className="py-8 mx-auto w-full max-w-screen-2xl flex-col">
+      <div className="mb-4 mt-24 px-4 sm:px-14 md:px-20 xl:px-40 2xl:px-56 w-full mx-auto relative">
         <div className="flex flex-col justify-center mb-12">
           <h2 className="text-2xl sm:text-4xl font-semibold text-gradient_purple-blue leading-tight">
             {project.title}
@@ -181,10 +181,10 @@ const PageContent = () => {
       </div>
 
       <div className="flex mx-5 flex-col justify-start">
-        <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
+        <h2 className="text-xl sm:ml-11 md:ml-16 xl:ml-36 sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
           Related Post:-
         </h2>
-        <div className="mt-6 flex flex-wrap justify-center gap-2 sm:justify-start">
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
           {relatedProjects?.length > 1 ? (
             relatedProjects
               .filter(
