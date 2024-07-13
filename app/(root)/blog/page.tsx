@@ -105,7 +105,7 @@ const PageContent = () => {
   };
 
   return (
-    <section className="py-8 mx-auto w-full max-w-screen-2xl flex-col">
+    <section className="py-8 mx-auto w-full max-w-screen-2xl flex-col overflow-hidden">
       <div className="mb-4 mt-24 px-4 sm:px-14 md:px-20 xl:px-40 2xl:px-56 w-full mx-auto relative">
         <div className="flex flex-col justify-center mb-12">
           <h2 className="text-2xl sm:text-4xl font-semibold text-gradient_purple-blue leading-tight">
@@ -124,13 +124,13 @@ const PageContent = () => {
             <div className="flex justify-center items-center gap-2">
               <button
                 onClick={handleEdit}
-                className="bg-purple hover:bg-pink translation duration-500 text-white font-bold py-2 px-6 rounded my-8 active:scale-95"
+                className="bg-purple hover:bg-pink translation duration-500 text-white font-bold py-2 px-6 rounded mt-8 active:scale-95"
               >
                 Edit this project
               </button>
               <button
                 onClick={() => handleDelete(project)}
-                className="bg-purple hover:bg-pink translation duration-500 text-white font-bold py-2 px-6 rounded my-8 active:scale-95"
+                className="bg-purple hover:bg-pink translation duration-500 text-white font-bold py-2 px-6 rounded mt-8 active:scale-95"
               >
                 Delete this project
               </button>
@@ -154,11 +154,11 @@ const PageContent = () => {
         </div>
 
         <div className="flex-col justify-center mb-8">
-          <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
+          {/* <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
             Content:-
-          </h2>
+          </h2> */}
           <div
-            className=" p-1 sm:p-5 text-white blog-content"
+            className=" text-white blog-content"
             dangerouslySetInnerHTML={{ __html: project.content }}
           ></div>
         </div>

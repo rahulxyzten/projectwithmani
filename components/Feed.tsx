@@ -70,7 +70,7 @@ const Feed = () => {
           )}
         </div>
         {projects.length >= 6 && (
-          <ul className="body-regular text-white-400 mt-6">
+          <ul className="body-regular text-white-400 hover:text-white hover:underline mt-6">
             <Link
               href={{ pathname: "/tutorials", query: { category: category } }}
             >
