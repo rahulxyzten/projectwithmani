@@ -27,9 +27,9 @@ const ProjectCard = ({
   };
 
   return (
-    <div className="text-slate-950 shadow-sm w-full rounded-[10px] border border-black-400 bg-black-200/80 p-3 shadow-video-card sm:w-[410px] sm:p-5 hover:drop-shadow-3xl">
+    <div className="text-slate-950 shadow-sm w-[320px] xs:w-[340px] rounded-[10px] border border-black-400 bg-black-200/80 p-3 shadow-video-card sm:w-[410px] sm:p-5 hover:drop-shadow-3xl">
       <div className="flex flex-col space-y-1.5 p-0 cursor-pointer">
-        <div className="relative h-[170px] w-full rounded-md xs:h-[220px] sm:h-[205px] overflow-hidden">
+        <div className="relative h-full xs:h-[170px] w-full rounded-md sm:h-[205px] overflow-hidden">
           <Image
             onClick={handleBlog}
             src={imgUrl}
