@@ -5,6 +5,16 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { FaDownload } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+
 import ProjectCard from "@/components/ProjectCard";
 
 const getYouTubeID = (url: string): string | null => {
@@ -60,7 +70,7 @@ const PageContent = () => {
         projectPrice: data.projectPrice,
         thumbnailUrl: data.thumbnail.url,
         youtubelink: data.youtubelink,
-        sourceCodelink: data.sourceCodelink,
+        sourceCodelink: data.sourceCodelink || "",
       });
       setCategory(data.category);
     };
@@ -165,22 +175,37 @@ const PageContent = () => {
 
         <div className="flex-col justify-center items-center mb-8">
           <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
-            Code:-
+            Source Code:-
           </h2>
-          {/* <div className="flex flex-col justify-center items-center p-5 mt-4 rounded-lg  shadow-sm border hover:border-2 border-black-400"> */}
-          <div className="flex flex-col justify-start p-5 ">
-            <p className="text-white">Price: {project.projectPrice}</p>
-            <button
-              // onClick={() => handlePayment(project.projectPrice, project.id)}
-              className="bg-purple w-32 hover:bg-pink transition duration-500 text-white font-bold py-2 px-4 mt-2 rounded active:scale-95"
-            >
-              Buy Now
-            </button>
+          <div className="flex flex-col justify-center items-center mt-4">
+            <Link target="_blank" href={project.sourceCodelink}>
+              <button className="bg-purple w-40 hover:bg-pink transition duration-500 text-white font-bold py-2 px-4 mt-2 rounded active:scale-95 flex items-center justify-center gap-2">
+                <p>G Drive Link</p>
+                <FaDownload />
+              </button>
+            </Link>
+          </div>
+        </div>
+
+        <div className="flex-col justify-center items-center mb-8">
+          <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
+            Buy Complete Project:-
+          </h2>
+          <div className="flex flex-col justify-center items-center mt-4 sm:mt-6">
+            <p className="text-white font-semibold">
+              Project price: ₹ {project.projectPrice}
+            </p>
+            <Link href="/">
+              <button className="bg-purple w-40 hover:bg-pink transition duration-500 text-white font-bold py-2 px-4 mt-4 rounded active:scale-95 flex items-center justify-center gap-2">
+                <p>Buy Now</p>
+                <FaShoppingCart />
+              </button>
+            </Link>
           </div>
         </div>
       </div>
 
-      <div className="flex mx-5 flex-col justify-start">
+      <div className="hidden 2xl:block mx-5 flex-col justify-start mb-12">
         <h2 className="text-xl sm:ml-11 md:ml-16 xl:ml-36 sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
           Related Post:-
         </h2>
@@ -211,23 +236,90 @@ const PageContent = () => {
         </div>
       </div>
 
-      {/* <div className="mb-4 mt-10 px-40 md:mb-0 w-full mx-auto relative">
-        <div className="flex-col justify-center mb-12">
-          <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight text-gradient_purple-blue ">
-            Comments:-
-          </h2>
-          <div className="flex justify-center mt-8 items-center rounded">
-            <iframe
-              className=""
-              width="800"
-              height="450"
-              src="https://www.youtube.com/embed/KGZqndaJB4A?si=ghH4BL62uEoUfyb8"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
+      <div className="flex 2xl:hidden mx-5 flex-col justify-start mb-12">
+        <h2 className="text-xl sm:ml-11 md:ml-16 xl:ml-36 sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
+          Related Post:-
+        </h2>
+        <div className="mt-16 flex sm:hidden">
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            orientation="vertical"
+            className="w-full"
+          >
+            <CarouselContent className="h-[330px] xs:h-[380px]">
+              {relatedProjects?.length > 1 ? (
+                relatedProjects
+                  .filter(
+                    (relatedProject: any) => relatedProject._id !== project.id
+                  )
+                  .slice(0, 3)
+                  .map((project: any) => (
+                    <CarouselItem>
+                      <ProjectCard
+                        key={project._id}
+                        id={project._id}
+                        title={project.title}
+                        summary={project.summary}
+                        content={project.content}
+                        category={project.category}
+                        imgUrl={project.thumbnail?.url}
+                        youtubeLink={project.youtubelink}
+                      />
+                    </CarouselItem>
+                  ))
+              ) : (
+                <CarouselItem>
+                  <p className="body-regular text-white-400">
+                    No related projects found
+                  </p>
+                </CarouselItem>
+              )}
+            </CarouselContent>
+            <CarouselPrevious className="text-white" />
+            <CarouselNext className="text-white" />
+          </Carousel>
         </div>
-      </div> */}
+        <div className="hidden sm:flex mt-6 flex-wrap justify-center gap-2">
+          <Carousel
+            orientation="horizontal"
+            className="w-full max-w-full sm:max-w-lg lg:max-w-4xl"
+          >
+            <CarouselContent>
+              {relatedProjects?.length > 1 ? (
+                relatedProjects
+                  .filter(
+                    (relatedProject: any) => relatedProject._id !== project.id
+                  )
+                  .slice(0, 3)
+                  .map((project: any) => (
+                    <CarouselItem className="lg:basis-1/2 flex items-center justify-center">
+                      <ProjectCard
+                        key={project._id}
+                        id={project._id}
+                        title={project.title}
+                        summary={project.summary}
+                        content={project.content}
+                        category={project.category}
+                        imgUrl={project.thumbnail?.url}
+                        youtubeLink={project.youtubelink}
+                      />
+                    </CarouselItem>
+                  ))
+              ) : (
+                <CarouselItem>
+                  <p className="body-regular text-white-400">
+                    No related projects found
+                  </p>
+                </CarouselItem>
+              )}
+            </CarouselContent>
+            <CarouselPrevious className="text-white" />
+            <CarouselNext className="text-white" />
+          </Carousel>
+        </div>
+      </div>
     </section>
   );
 };

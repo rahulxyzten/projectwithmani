@@ -335,7 +335,7 @@
   white-space: pre;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 769px) {
   .blog-content .ql-syntax {
     margin-left: 35px;
     margin-right: 35px;
