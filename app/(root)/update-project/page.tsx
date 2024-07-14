@@ -24,12 +24,12 @@ const PageContent = () => {
   });
 
   useEffect(() => {
-    if (!session?.user || !session.user.isAdmin) {
+    // Redirect if not an admin
+    if (!session?.user?.isAdmin) {
       router.push("/");
+      return;
     }
-  }, [session, router]);
 
-  useEffect(() => {
     const getProjectDetails = async () => {
       const response = await fetch(`/api/project/${projectId}`);
       const data = await response.json();
@@ -45,8 +45,10 @@ const PageContent = () => {
       });
     };
 
-    if (projectId) getProjectDetails();
-  }, [projectId]);
+    if (projectId) {
+      getProjectDetails();
+    }
+  }, [projectId, session, router]);
 
   const updateProject = async (e: FormEvent) => {
     e.preventDefault();

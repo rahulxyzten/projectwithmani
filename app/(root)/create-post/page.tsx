@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState,useEffect, FormEvent } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import PostForm from "@/components/PostForm";
@@ -31,8 +31,10 @@ const page = () => {
   });
 
   useEffect(() => {
-    if (!session?.user || !session.user.isAdmin) {
+    // Redirect if not an admin
+    if (!session?.user?.isAdmin) {
       router.push("/");
+      return;
     }
   }, [session, router]);
 

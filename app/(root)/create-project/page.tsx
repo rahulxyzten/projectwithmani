@@ -41,8 +41,10 @@ const page = () => {
   });
 
   useEffect(() => {
-    if (!session?.user || !session.user.isAdmin) {
+    // Redirect if not an admin
+    if (!session?.user?.isAdmin) {
       router.push("/");
+      return;
     }
   }, [session, router]);
 
