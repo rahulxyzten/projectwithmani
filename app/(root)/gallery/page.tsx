@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import GalleryCard from "@/components/GalleryCard";
+import { motion } from "framer-motion";
 
 const page = () => {
   const [posts, setPosts] = useState<any[]>([]);
@@ -27,6 +28,17 @@ const page = () => {
     setVisibleCount((prevCount) => prevCount + 8);
   };
 
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.2,
+      },
+    }),
+  };
+
   return (
     <section className=" flex-center paddings mx-auto w-full max-w-screen-2xl flex-col">
       <div className=" pt-[50px] w-full flex flex-col items-center bg-black-100 text-white-800 min-h-screen">
@@ -40,12 +52,20 @@ const page = () => {
         </Link>
         <div className="flex flex-wrap justify-center mt-4 gap-4">
           {posts.slice(0, visibleCount).map((post, index) => (
-            <GalleryCard
-              key={index}
-              title={post.title}
-              username={post.username}
-              image={post.cover.url}
-            />
+            <motion.div
+              key={post._id}
+              custom={index}
+              initial="hidden"
+              animate="visible"
+              variants={cardVariants}
+            >
+              <GalleryCard
+                key={index}
+                title={post.title}
+                username={post.username}
+                image={post.cover.url}
+              />
+            </motion.div>
           ))}
         </div>
         {visibleCount < posts.length && (
