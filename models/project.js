@@ -19,7 +19,7 @@ const ProjectSchema = new Schema({
   },
   projectPrice: {
     type: String,
-    required: [true, "Category is required."],
+    required: [true, "Project price is required."],
   },
   thumbnail: {
     public_id: {

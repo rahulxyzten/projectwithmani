@@ -7,16 +7,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { FaDownload } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
-} from "@/components/ui/carousel";
-
-import ProjectCard from "@/components/ProjectCard";
+import RelatedProject from "@/components/RelatedProject";
 
 const getYouTubeID = (url: string): string | null => {
   const regExp =
@@ -45,9 +36,6 @@ const PageContent = () => {
 
   const [relatedProjects, setRelatedProjects] = useState<any[]>([]);
   const [category, setCategory] = useState<string>("");
-  const [api, setApi] = React.useState<CarouselApi>();
-  const [current, setCurrent] = React.useState(0);
-  const [count, setCount] = React.useState(0);
   const [project, setProject] = useState({
     id: "",
     title: "",
@@ -92,19 +80,6 @@ const PageContent = () => {
 
     getRelatedProjects();
   }, [category]);
-
-  React.useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    setCount(3);
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
 
   const videoID = getYouTubeID(project.youtubelink);
 
@@ -226,84 +201,7 @@ const PageContent = () => {
         </div>
       </div>
 
-      <div className="hidden 2xl:block mx-5 flex-col justify-start mb-12">
-        <h2 className="text-xl sm:ml-11 md:ml-16 xl:ml-36 sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
-          Related Projects:-
-        </h2>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          {relatedProjects?.length > 1 ? (
-            relatedProjects
-              .filter(
-                (relatedProject: any) => relatedProject._id !== project.id
-              )
-              .slice(0, 3)
-              .map((project: any) => (
-                <ProjectCard
-                  key={project._id}
-                  id={project._id}
-                  title={project.title}
-                  summary={project.summary}
-                  content={project.content}
-                  category={project.category}
-                  imgUrl={project.thumbnail?.url}
-                  youtubeLink={project.youtubelink}
-                />
-              ))
-          ) : (
-            <p className="body-regular text-white-400">
-              No related projects found
-            </p>
-          )}
-        </div>
-      </div>
-
-      <div className="flex 2xl:hidden mx-5 flex-col justify-start mb-12">
-        <h2 className="text-xl sm:ml-11 md:ml-16 xl:ml-36 sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
-          Related Projects:-
-        </h2>
-        <div className="flex mt-6 flex-col items-center justify-center gap-2">
-          <Carousel
-            setApi={setApi}
-            orientation="horizontal"
-            className="max-w-md sm:max-w-lg lg:max-w-4xl"
-          >
-            <CarouselContent>
-              {relatedProjects?.length > 1 ? (
-                relatedProjects
-                  .filter(
-                    (relatedProject: any) => relatedProject._id !== project.id
-                  )
-                  .slice(0, 3)
-                  .map((project: any) => (
-                    <CarouselItem className="lg:basis-1/2 flex items-center justify-center">
-                      <ProjectCard
-                        key={project._id}
-                        id={project._id}
-                        title={project.title}
-                        summary={project.summary}
-                        content={project.content}
-                        category={project.category}
-                        imgUrl={project.thumbnail?.url}
-                        youtubeLink={project.youtubelink}
-                      />
-                    </CarouselItem>
-                  ))
-              ) : (
-                <CarouselItem>
-                  <p className="body-regular text-white-400">
-                    No related projects found
-                  </p>
-                </CarouselItem>
-              )}
-            </CarouselContent>
-            <CarouselPrevious className="text-white" />
-            <CarouselNext className="text-white" />
-          </Carousel>
-          <div className="py-2 lg:hidden text-white text-center text-sm">
-            project {current} of {count}
-          </div>
-        </div>
-      </div>
+      <RelatedProject relatedProjects={relatedProjects} projectId={projectId} />
     </section>
   );
 };

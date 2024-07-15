@@ -12,6 +12,7 @@ const PageContent = () => {
   const projectId = searchParams.get("id");
 
   const [submitting, setSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [project, setProject] = useState({
     title: "",
     summary: "",
@@ -31,24 +32,38 @@ const PageContent = () => {
     }
 
     const getProjectDetails = async () => {
-      const response = await fetch(`/api/project/${projectId}`);
-      const data = await response.json();
-      setProject({
-        title: data.title,
-        summary: data.summary,
-        category: data.category,
-        projectPrice: data.projectPrice,
-        content: data.content,
-        thumbnail: {} as File,
-        youtubelink: data.youtubelink,
-        sourceCodelink: data.sourceCodelink,
-      });
+      try {
+        const response = await fetch(`/api/project/${projectId}`);
+        const data = await response.json();
+        const savedProject = JSON.parse(localStorage.getItem(`project_${projectId}`) || "{}");
+
+        setProject({
+          title: savedProject.title || data.title,
+          summary: savedProject.summary || data.summary,
+          category: savedProject.category || data.category,
+          projectPrice: savedProject.projectPrice || data.projectPrice,
+          content: savedProject.content || data.content,
+          thumbnail: {} as File,
+          youtubelink: savedProject.youtubelink || data.youtubelink,
+          sourceCodelink: savedProject.sourceCodelink || data.sourceCodelink,
+        });
+        setLoading(false); // Set loading to false after data is set
+      } catch (error) {
+        console.error(error);
+        setLoading(false); // Set loading to false in case of an error
+      }
     };
 
     if (projectId) {
       getProjectDetails();
     }
   }, [projectId, session, router]);
+
+  useEffect(() => {
+    if (projectId) {
+      localStorage.setItem(`project_${projectId}`, JSON.stringify(project));
+    }
+  }, [project, projectId]);
 
   const updateProject = async (e: FormEvent) => {
     e.preventDefault();
@@ -105,13 +120,18 @@ const PageContent = () => {
 
       if (response.ok) {
         router.push(`/blog?id=${projectId}`);
+        localStorage.removeItem(`project_${projectId}`);
       }
     } catch (error) {
-      console.log(error);
+      console.log("Update project error:", error);
     } finally {
       setSubmitting(false);
     }
   };
+
+  if (loading) {
+    return <div>Loading...</div>; // Render a loading state while fetching data
+  }
 
   return (
     <Form
