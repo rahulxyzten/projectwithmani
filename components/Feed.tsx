@@ -34,7 +34,7 @@ const Feed = () => {
   return (
     <>
       <section className="nav-padding w-full max-w-screen-xl 3xl:max-w-full">
-        <div className="flex-center relative min-h-[274px] w-full flex-col rounded-xl bg-banner bg-cover bg-center text-center">
+        <div className="flex-center relative min-h-[274px] w-full flex-col rounded-xl sm:bg-banner bg-cover bg-center text-center bg-mobile-banner">
           <h1 className="sm:heading1 heading2 mb-6 text-center text-white">
             Projects With Mani
           </h1>
@@ -49,7 +49,7 @@ const Feed = () => {
         ) : (
           <Header query={query} category={category} />
         )}
-        <div className="mt-12 flex w-full flex-wrap justify-center gap-10 sm:justify-start">
+        <div className="mt-12 flex w-full flex-wrap justify-center gap-10 sm:gap-6">
           {projects?.length > 0 ? (
             projects
               .slice(0, 6)
