@@ -33,7 +33,7 @@ const PageContent = () => {
       <h1 className="text-4xl mb-6 font-bold text-center text-white-800 py-5">
         Purchase Your Project Now!
       </h1>
-      <h1 className="text-4xl font-bold text-center text-gradient_purple-blue py-5">
+      <h1 className="text-4xl font-bold text-center text-gradient_purple-blue py-5 max-w-screen-xl">
         {project.title}
       </h1>
       <h1 className="text-4xl font-bold text-center text-white-800 py-5">
