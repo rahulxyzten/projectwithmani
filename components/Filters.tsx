@@ -8,7 +8,6 @@ const links = [
   "arduino",
   "electronics",
   "esp8266",
-  "more",
   // "raspberrypi",
   // "multirotor",
   // "esp32",
@@ -41,7 +40,7 @@ const Filters = () => {
   }, [searchParams]);
 
   return (
-    <ul className="text-white-800 body-text no-scrollbar flex w-full max-w-full gap-2 overflow-auto pt-12 sm:max-w-2xl">
+    <ul className="text-white-800 body-text no-scrollbar flex w-full max-w-full sm:justify-center overflow-auto pt-12 sm:max-w-2xl">
       {links.map((link) => (
         <button
           key={link}
@@ -53,6 +52,18 @@ const Filters = () => {
           {link}
         </button>
       ))}
+      <select
+        onChange={(e) => handleFilter(e.target.value)}
+        value={active}
+        className={`${
+          links.includes(active) ? "" : "gradient_blue-purple"
+        } custom-select whitespace-nowrap bg-black-100 focus:bg-black-100 focus:outline-none appearance-none rounded-lg px-2 capitalize text-center`}
+      >
+        <option value="">More</option>
+        <option value="raspberrypi">raspberrypi</option>
+        <option value="multirotor">multirotor</option>
+        <option value="esp32">esp32</option>
+      </select>
     </ul>
   );
 };

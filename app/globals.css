@@ -348,3 +348,8 @@
     margin-right: 100px;
   }
 }
+
+.custom-select option {
+  padding-left: 7px;
+  font-size: 0.875rem;
+}
