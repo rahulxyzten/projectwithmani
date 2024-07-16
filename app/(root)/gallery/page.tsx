@@ -28,6 +28,27 @@ const page = () => {
     setVisibleCount((prevCount) => prevCount + 8);
   };
 
+  const handlePostDelete = async (id: string) => {
+    const hasConfirmed = confirm("Are you sure you want to delete this post");
+
+    if (hasConfirmed) {
+      try {
+        //  console.log(post.id);
+        const response = await fetch(`/api/gallery/${id.toString()}`, {
+          method: "DELETE",
+        });
+
+        if (response.ok) {
+          alert("Post deleted successfully");
+          const filteredPosts = posts.filter((p) => p._id !== id);
+          setPosts(filteredPosts);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: (i: number) => ({
@@ -61,9 +82,11 @@ const page = () => {
             >
               <GalleryCard
                 key={index}
+                id={post._id}
                 title={post.title}
                 username={post.username}
                 image={post.cover.url}
+                handlePostDelete={() => handlePostDelete(post._id)}
               />
             </motion.div>
           ))}
