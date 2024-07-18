@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import { FaDownload } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import RelatedProject from "@/components/RelatedProject";
+import { toast } from "react-toastify";
 
 //payment gateway
 // const handlePayment = async (amount, projectId) => {
@@ -155,7 +156,7 @@ const PageContent = () => {
           method: "DELETE",
         });
         if (response.ok) {
-          alert("Project deleted successfully");
+          toast("Project deleted successfully");
           router.back();
         }
       } catch (error) {

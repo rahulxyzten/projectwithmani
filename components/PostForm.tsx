@@ -67,7 +67,7 @@ const PostForm = ({ type, post, setPost, submitting, handleSubmit }: Props) => {
             className="cursor-pointer w-full block bg-white-800 border-0 rounded px-2 py-2 mt-1 hover:bg-white-500"
             disabled={submitting}
           >
-            {submitting ? `{type}...` : type}
+            {submitting ? `{Uploading}...` : type}
           </button>
         </div>
       </div>
