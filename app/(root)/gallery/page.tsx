@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import GalleryCard from "@/components/GalleryCard";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 const page = () => {
   const [posts, setPosts] = useState<any[]>([]);
@@ -39,7 +40,7 @@ const page = () => {
         });
 
         if (response.ok) {
-          alert("Post deleted successfully");
+          toast("😔 Post deleted successfully");
           const filteredPosts = posts.filter((p) => p._id !== id);
           setPosts(filteredPosts);
         }

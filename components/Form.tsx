@@ -173,7 +173,7 @@ const Form = ({
             type="submit"
             disabled={submitting}
           >
-            {submitting ? `{type}...` : type}
+            {submitting ? `{Updating}...` : type}
           </button>
         </motion.div>
       </div>
