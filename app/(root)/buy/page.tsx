@@ -3,6 +3,8 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { FaTwitter, FaLinkedin, FaYoutube, FaGithub } from "react-icons/fa";
+
 
 const PageContent = () => {
   const searchParams = useSearchParams();
@@ -27,42 +29,72 @@ const PageContent = () => {
   }, [projectId]);
 
   return (
-    <section className="pt-[130px] flex w-full flex-col items-center">
-      <h1 className="text-4xl mb-6 font-bold text-center text-white-800 py-5">
-        Buy the project
+    <section className="pt-[130px] flex w-full flex-col items-center px-6">
+      <h1 className="text-3xl sm:text-4xl mb-6 font-bold text-center text-white-800 py-5">
+        Purchase Your Project Now!
       </h1>
-      <h1 className="text-4xl font-bold text-center text-white-800 py-5">
+      <h1 className="text-2xl sm:text-4xl font-bold text-center text-gradient_purple-blue py-5 max-w-screen-xl">
         {project.title}
       </h1>
       <h1 className="text-4xl font-bold text-center text-white-800 py-5">
-        {project.projectPrice}
+        ₹{project.projectPrice}/-
       </h1>
 
-      <div className="flex flex-col items-center ">
+      <div className="flex flex-col items-center bg-white p-8 rounded-lg shadow-lg">
         <Image
-          src="/mani.jpg"
-          className="rounded-full !bg-transparent object-cover transition-transform duration-500 ease-in-out transform hover:scale-105"
-          width={400}
-          height={400}
-          alt="Kotini Mani Kanta"
+          src="/qr.jpg"
+          className="!bg-transparent object-cover rounded-md"
+          width={300}
+          height={300}
+          alt="QR Code for Payment"
         />
         <h2 className="text-2xl font-semibold text-center text-gradient_blue-purple mt-4">
-          Kotini Mani Kanta
+          Scan to Pay - Kotini Mani Kanta
         </h2>
       </div>
 
-      <p className="mt-4 max-w-3xl text-center text-white px-4">
-        I am an electronics enthusiast with a B.Tech in Electronics and
-        Communication Engineering. Driven by my passion for technology, I share
-        my knowledge and experiences through my YouTube channel. Regardless of
-        the outcome, I am committed to consistently creating valuable content on
-        YouTube. Additionally, I offer readymade projects for students tailored
-        to their requirements at affordable and competitive prices.
+      <p className="mt-4 max-w-3xl text-center text-white-800 px-4">
+        Your purchase supports continuous valuable content creation and innovation. Join our community and get access to quality projects that can help you succeed.
       </p>
 
-      <p className="mt-4 max-w-3xl text-center text-white px-4">
+      <p className="mt-4 max-w-3xl text-center text-white-800 px-4">
         Connect with me:
       </p>
+
+      <div className="flex mt-6 space-x-4">
+        <a
+          href="https://twitter.com/yourprofile"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white hover:text-blue-500"
+        >
+          <FaTwitter size={30} />
+        </a>
+        <a
+          href="https://linkedin.com/in/yourprofile"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white hover:text-blue-700"
+        >
+          <FaLinkedin size={30} />
+        </a>
+        <a
+          href="https://youtube.com/yourchannel"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white hover:text-red-600"
+        >
+          <FaYoutube size={30} />
+        </a>
+        <a
+          href="https://github.com/yourprofile"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white hover:text-gray-700"
+        >
+          <FaGithub size={30} />
+        </a>
+      </div>
 
       <div className="py-12"></div>
     </section>
