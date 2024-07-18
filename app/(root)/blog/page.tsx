@@ -146,16 +146,18 @@ const PageContent = () => {
 
   const handleDelete = async (project: Project) => {
     const hasConfirmed = confirm(
-      "Are you sure you want to delete this prompt?"
+      "Are you sure you want to delete this project"
     );
 
     if (hasConfirmed) {
       try {
-        await fetch(`/api/project/${project.id.toString()}`, {
+        const response = await fetch(`/api/project/${project.id.toString()}`, {
           method: "DELETE",
         });
-
-        router.back();
+        if (response.ok) {
+          alert("Project deleted successfully");
+          router.back();
+        }
       } catch (error) {
         console.log(error);
       }
