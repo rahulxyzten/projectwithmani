@@ -30,10 +30,10 @@ const PageContent = () => {
 
   return (
     <section className="pt-[130px] flex w-full flex-col items-center px-6">
-      <h1 className="text-4xl mb-6 font-bold text-center text-white-800 py-5">
+      <h1 className="text-3xl sm:text-4xl mb-6 font-bold text-center text-white-800 py-5">
         Purchase Your Project Now!
       </h1>
-      <h1 className="text-4xl font-bold text-center text-gradient_purple-blue py-5 max-w-screen-xl">
+      <h1 className="text-2xl sm:text-4xl font-bold text-center text-gradient_purple-blue py-5 max-w-screen-xl">
         {project.title}
       </h1>
       <h1 className="text-4xl font-bold text-center text-white-800 py-5">
