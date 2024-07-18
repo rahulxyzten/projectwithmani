@@ -1,10 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import { Input } from "@nextui-org/react";
 import { Select, SelectItem } from "@nextui-org/react";
-const Editor = dynamic(() => import('./Editor'), { ssr: false });
+import { motion } from "framer-motion";
+const Editor = dynamic(() => import("./Editor"), { ssr: false });
 
 interface Project {
   title: string;
@@ -41,6 +42,10 @@ const Form = ({
     "multirotor",
     "esp32",
   ];
+  const formVariants = {
+    hidden: { opacity: 0, y: 100 },
+    visible: { opacity: 1, y: 0 },
+  };
 
   useEffect(() => {
     if (project.category) {
@@ -62,7 +67,13 @@ const Form = ({
     >
       <div className="nav-padding w-full">
         <h1 className="mb-7 heading3 text-white-800">{type} your project ✨</h1>
-        <div className="shadow-sm dark:border-zinc-600 rounded-[10px] border-2 border-black-400 p-5">
+        <motion.div
+          className="shadow-sm dark:border-zinc-600 rounded-[10px] border-2 border-black-400 p-5"
+          initial="hidden"
+          animate="visible"
+          variants={formVariants}
+          transition={{ duration: 0.5 }}
+        >
           <Input
             type="text"
             className="mb-5 "
@@ -164,7 +175,7 @@ const Form = ({
           >
             {submitting ? `{type}...` : type}
           </button>
-        </div>
+        </motion.div>
       </div>
     </form>
   );
