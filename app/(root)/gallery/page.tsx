@@ -34,7 +34,6 @@ const page = () => {
 
     if (hasConfirmed) {
       try {
-        //  console.log(post.id);
         const response = await fetch(`/api/gallery/${id.toString()}`, {
           method: "DELETE",
         });

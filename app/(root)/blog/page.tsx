@@ -77,6 +77,8 @@ interface Project {
   category: string;
   content: string;
   projectPrice: number;
+  projectDiscount: number;
+  razorpaylink: string;
   thumbnailUrl: string;
   youtubelink: string;
   sourceCodelink: string;
@@ -97,6 +99,8 @@ const PageContent = () => {
     category: "",
     content: "",
     projectPrice: 0,
+    projectDiscount: 0,
+    razorpaylink: "",
     thumbnailUrl: "",
     youtubelink: "",
     sourceCodelink: "",
@@ -113,6 +117,8 @@ const PageContent = () => {
         category: data.category,
         content: data.content,
         projectPrice: data.projectPrice,
+        projectDiscount: data.projectDiscount,
+        razorpaylink: data.razorpaylink,
         thumbnailUrl: data.thumbnail.url,
         youtubelink: data.youtubelink,
         sourceCodelink: data.sourceCodelink || "",
@@ -122,6 +128,11 @@ const PageContent = () => {
 
     if (projectId) getProjectDetails();
   }, [projectId]);
+
+  const finalPrice = Math.floor(
+    project.projectPrice -
+      (project.projectPrice * project.projectDiscount) / 100
+  );
 
   useEffect(() => {
     const getRelatedProjects = async () => {
@@ -245,6 +256,12 @@ const PageContent = () => {
           <div className="flex flex-col justify-center items-center mt-4 sm:mt-6">
             <p className="text-white font-semibold">
               Project price: ₹ {project.projectPrice}
+            </p>
+            <p className="text-white font-semibold">
+              Project discount: {project.projectDiscount}%
+            </p>
+            <p className="text-white font-semibold">
+              Final Price: ₹ {finalPrice}
             </p>
             <button
               onClick={handleBuy}

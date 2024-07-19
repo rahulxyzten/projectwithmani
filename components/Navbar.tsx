@@ -182,6 +182,14 @@ const Navbar = () => {
                           Create Post
                         </Link>
                       </li>
+                      <li className="body-text text-gradient_blue-purple !font-bold">
+                        <Link
+                          href="/dashboard"
+                          onClick={() => setContentDropdown((prev) => !prev)}
+                        >
+                          Dash Board
+                        </Link>
+                      </li>
                     </>
                   )}
                 </div>
@@ -281,6 +289,14 @@ const Navbar = () => {
                     >
                       <Link href="/create-post" onClick={handleLinkClick}>
                         Create Post
+                      </Link>
+                    </motion.li>
+                    <motion.li
+                      className="body-text text-gradient_blue-purple !font-bold"
+                      variants={fadeInVariants}
+                    >
+                      <Link href="/dashboard" onClick={handleLinkClick}>
+                      Dash Board
                       </Link>
                     </motion.li>
                   </>

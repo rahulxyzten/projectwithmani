@@ -17,8 +17,10 @@ const PageContent = () => {
     title: "",
     summary: "",
     category: "",
-    projectPrice: 0,
     content: "",
+    projectPrice: 0,
+    projectDiscount: 0,
+    razorpaylink: "",
     thumbnail: {} as File,
     youtubelink: "",
     sourceCodelink: "",
@@ -35,14 +37,18 @@ const PageContent = () => {
       try {
         const response = await fetch(`/api/project/${projectId}`);
         const data = await response.json();
-        const savedProject = JSON.parse(localStorage.getItem(`project_${projectId}`) || "{}");
+        const savedProject = JSON.parse(
+          localStorage.getItem(`project_${projectId}`) || "{}"
+        );
 
         setProject({
           title: savedProject.title || data.title,
           summary: savedProject.summary || data.summary,
           category: savedProject.category || data.category,
-          projectPrice: savedProject.projectPrice || data.projectPrice,
           content: savedProject.content || data.content,
+          projectPrice: savedProject.projectPrice || data.projectPrice,
+          projectDiscount: savedProject.projectDiscount || data.projectDiscount,
+          razorpaylink: savedProject.razorpaylink || data.razorpaylink,
           thumbnail: {} as File,
           youtubelink: savedProject.youtubelink || data.youtubelink,
           sourceCodelink: savedProject.sourceCodelink || data.sourceCodelink,
@@ -106,9 +112,11 @@ const PageContent = () => {
         body: JSON.stringify({
           title: project.title,
           summary: project.summary,
-          content: project.content,
           category: project.category,
+          content: project.content,
           projectPrice: project.projectPrice,
+          projectDiscount: project.projectDiscount,
+          razorpaylink: project.razorpaylink,
           thumbnail: {
             public_id: imagePublicId,
             url: imageUrl,

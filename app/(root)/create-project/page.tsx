@@ -9,8 +9,10 @@ interface Project {
   title: string;
   summary: string;
   category: string;
-  projectPrice: number;
   content: string;
+  projectPrice: number;
+  projectDiscount: number;
+  razorpaylink: string;
   thumbnail: File;
   youtubelink: string;
   sourceCodelink: string;
@@ -33,8 +35,10 @@ const page = () => {
     title: "",
     summary: "",
     category: "",
-    projectPrice: 0,
     content: "",
+    projectPrice: 0,
+    projectDiscount: 0,
+    razorpaylink: "",
     thumbnail: {} as File,
     youtubelink: "",
     sourceCodelink: "",
@@ -85,9 +89,11 @@ const page = () => {
           body: JSON.stringify({
             title: project.title,
             summary: project.summary,
-            content: project.content,
             category: project.category,
+            content: project.content,
             projectPrice: project.projectPrice,
+            projectDiscount: project.projectDiscount,
+            razorpaylink: project.razorpaylink,
             thumbnail: {
               public_id: imagePublicId,
               url: imageUrl,

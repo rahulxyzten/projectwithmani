@@ -3,8 +3,9 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { FaTwitter, FaLinkedin, FaYoutube, FaGithub } from "react-icons/fa";
-
+import { SiRazorpay } from "react-icons/si";
 
 const PageContent = () => {
   const searchParams = useSearchParams();
@@ -13,6 +14,8 @@ const PageContent = () => {
   const [project, setProject] = useState({
     title: "",
     projectPrice: 0,
+    projectDiscount: 0,
+    razorpaylink: "",
   });
 
   useEffect(() => {
@@ -22,22 +25,35 @@ const PageContent = () => {
       setProject({
         title: data.title,
         projectPrice: data.projectPrice,
+        projectDiscount: data.projectDiscount,
+        razorpaylink: data.razorpaylink,
       });
     };
 
     if (projectId) getProjectDetails();
   }, [projectId]);
 
+  const finalPrice = Math.floor(
+    project.projectPrice -
+      (project.projectPrice * project.projectDiscount) / 100
+  );
+
   return (
     <section className="pt-[130px] flex w-full flex-col items-center px-6">
-      <h1 className="text-3xl sm:text-4xl mb-6 font-bold text-center text-white-800 py-5">
+      <h1 className="text-3xl sm:text-4xl mb-4 font-bold text-center text-white-800 py-5">
         Purchase Your Project Now!
       </h1>
       <h1 className="text-2xl sm:text-4xl font-bold text-center text-gradient_purple-blue py-5 max-w-screen-xl">
         {project.title}
       </h1>
-      <h1 className="text-4xl font-bold text-center text-white-800 py-5">
+      <h1 className="text-3xl sm:text-4xl font-bold text-center text-white-800 py-5">
         ₹{project.projectPrice}/-
+      </h1>
+      <h1 className="text-3xl sm:text-4xl font-bold text-center text-white-800 py-5">
+        {project.projectDiscount}%
+      </h1>
+      <h1 className="text-3xl sm:text-4xl font-bold text-center text-white-800 py-5">
+        ₹{finalPrice}/-
       </h1>
 
       <div className="flex flex-col items-center bg-white p-8 rounded-lg shadow-lg">
@@ -53,47 +69,59 @@ const PageContent = () => {
         </h2>
       </div>
 
-      <p className="mt-4 max-w-3xl text-center text-white-800 px-4">
-        Your purchase supports continuous valuable content creation and innovation. Join our community and get access to quality projects that can help you succeed.
+      <div className="flex flex-col justify-center items-center">
+        <p className=" text-white font-bold mt-4">--or pay with--</p>
+        <Link target="_blank" href={project.razorpaylink}>
+          <button className="bg-purple w-40 hover:bg-pink transition duration-500 text-white font-bold py-2 px-4 mt-4 rounded active:scale-95 flex items-center justify-center gap-2">
+            <p>Razorpay</p>
+            <SiRazorpay />
+          </button>
+        </Link>
+      </div>
+
+      <p className="mt-8 max-w-3xl text-center text-white-800 px-4">
+        Your purchase supports continuous valuable content creation and
+        innovation. Join our community and get access to quality projects that
+        can help you succeed.
       </p>
 
       <p className="mt-4 max-w-3xl text-center text-white-800 px-4">
         Connect with me:
       </p>
 
-      <div className="flex mt-6 space-x-4">
-        <a
+      <div className="flex mt-4 space-x-4">
+        <Link
           href="https://twitter.com/yourprofile"
           target="_blank"
           rel="noopener noreferrer"
           className="text-white hover:text-blue-500"
         >
           <FaTwitter size={30} />
-        </a>
-        <a
+        </Link>
+        <Link
           href="https://linkedin.com/in/yourprofile"
           target="_blank"
           rel="noopener noreferrer"
           className="text-white hover:text-blue-700"
         >
           <FaLinkedin size={30} />
-        </a>
-        <a
+        </Link>
+        <Link
           href="https://youtube.com/yourchannel"
           target="_blank"
           rel="noopener noreferrer"
           className="text-white hover:text-red-600"
         >
           <FaYoutube size={30} />
-        </a>
-        <a
+        </Link>
+        <Link
           href="https://github.com/yourprofile"
           target="_blank"
           rel="noopener noreferrer"
           className="text-white hover:text-gray-700"
         >
           <FaGithub size={30} />
-        </a>
+        </Link>
       </div>
 
       <div className="py-12"></div>
