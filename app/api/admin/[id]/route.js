@@ -3,6 +3,7 @@ import Admin from "@/models/admin";
 
 // DELETE (delete)
 export const DELETE = async (request, { params }) => {
+  const { searchParams } = new URL(request.url);
   try {
     await connectToDB();
 

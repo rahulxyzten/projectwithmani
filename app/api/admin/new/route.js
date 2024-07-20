@@ -2,6 +2,7 @@ import { connectToDB } from "@/utils/database";
 import Admin from "@/models/admin";
 
 export const POST = async (req) => {
+  const { searchParams } = new URL(req.url);
   const { email } = await req.json();
 
   try {

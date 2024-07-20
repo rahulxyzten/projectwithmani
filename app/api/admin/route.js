@@ -2,6 +2,7 @@ import { connectToDB } from "@/utils/database";
 import Admin from "@/models/admin";
 
 export const GET = async (request) => {
+  const { searchParams } = new URL(request.url);
   try {
     await connectToDB();
 

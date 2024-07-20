@@ -42,24 +42,39 @@ const page = () => {
     }
   }, [session, router]);
 
+  const fetchAdmins = async () => {
+    try {
+      const response = await fetch("/api/admin", {
+        headers: {
+          "Cache-Control":
+            "no-store, no-cache, must-revalidate, proxy-revalidate",
+        },
+      });
+      const data = await response.json();
+      setAdmins(data);
+    } catch (error) {
+      console.error("Error fetching admins:", error);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch("/api/category", {
+        headers: {
+          "Cache-Control":
+            "no-store, no-cache, must-revalidate, proxy-revalidate",
+        },
+      });
+      const data = await response.json();
+      setCategories(data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch admins
-        const adminsResponse = await fetch("/api/admin");
-        const adminsData = await adminsResponse.json();
-        setAdmins(adminsData);
-
-        // Fetch categories
-        const categoriesResponse = await fetch("/api/category");
-        const categoriesData = await categoriesResponse.json();
-        setCategories(categoriesData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
+    fetchAdmins();
+    fetchCategories();
   }, []);
 
   const handleAddAdmin = async (e: FormEvent) => {
@@ -74,9 +89,12 @@ const page = () => {
       });
 
       if (response.ok) {
+        toast("Admin added successfully");
         const newAdmin = await response.json();
         setAdmins((prevAdmins) => [...prevAdmins, newAdmin]);
         setEmail("");
+      } else {
+        toast("Failed to add admin");
       }
     } catch (error) {
       console.log(error);
@@ -97,9 +115,12 @@ const page = () => {
       });
 
       if (response.ok) {
+        toast("Category added successfully");
         const newCategory = await response.json();
         setCategories((prevCategories) => [...prevCategories, newCategory]);
         setItem("");
+      } else {
+        toast("Failed to add category");
       }
     } catch (error) {
       console.log(error);
@@ -121,6 +142,8 @@ const page = () => {
           toast("😔 Admin deleted successfully");
           const filteredPosts = admins.filter((p) => p._id !== id);
           setAdmins(filteredPosts);
+        } else {
+          toast("Failed to delete admin");
         }
       } catch (error) {
         console.log(error);
@@ -143,6 +166,8 @@ const page = () => {
           toast("😔 Category deleted successfully");
           const filteredPosts = categories.filter((p) => p._id !== id);
           setCategories(filteredPosts);
+        } else {
+          toast("Failed to delete category");
         }
       } catch (error) {
         console.log(error);
