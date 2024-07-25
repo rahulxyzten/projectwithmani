@@ -14,10 +14,10 @@ const RootLayout = ({ children }) => {
     <html lang="en">
       <body className="dark min-h-screen bg-black-100 font-poppins">
         <Provider>
-          {/* <SmoothScroll> */}
+          <SmoothScroll>
             {children}
             <ToastContainer/>
-          {/* </SmoothScroll> */}
+          </SmoothScroll>
         </Provider>
       </body>
     </html>

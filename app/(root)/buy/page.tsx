@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaTwitter, FaLinkedin, FaYoutube, FaGithub } from "react-icons/fa";
 import { SiRazorpay } from "react-icons/si";
+import { motion } from "framer-motion";
 
 const PageContent = () => {
   const searchParams = useSearchParams();
@@ -46,15 +47,39 @@ const PageContent = () => {
       <h1 className="text-2xl sm:text-4xl font-bold text-center text-gradient_purple-blue py-5 max-w-screen-xl">
         {project.title}
       </h1>
-      <h1 className="text-3xl sm:text-4xl font-bold text-center text-white-800 py-5">
-        ₹{project.projectPrice}/-
-      </h1>
-      <h1 className="text-3xl sm:text-4xl font-bold text-center text-white-800 py-5">
-        {project.projectDiscount}%
-      </h1>
-      <h1 className="text-3xl sm:text-4xl font-bold text-center text-white-800 py-5">
-        ₹{finalPrice}/-
-      </h1>
+      <motion.div
+        className="flex flex-col justify-center items-center mt-4 sm:mt-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-col items-center">
+          <p className="text-white font-semibold">
+            Project price:
+            <span
+              className={`text-lg ${
+                project.projectDiscount ? "line-through text-red-500" : ""
+              } ml-2`}
+            >
+              ₹ {project.projectPrice}
+            </span>
+          </p>
+          {project.projectDiscount > 0 && (
+            <p className="text-white font-semibold">
+              Project discount:
+              <span className="text-green-500 ml-2">
+                {project.projectDiscount}%
+              </span>
+            </p>
+          )}
+          <p className="text-white font-semibold text-2xl py-5">
+            Final Price:
+            <span className="text-blue-400 text-3xl ml-2">
+              ₹ {finalPrice}
+            </span>
+          </p>
+        </div>
+      </motion.div>
 
       <div className="flex flex-col items-center bg-white p-8 rounded-lg shadow-lg">
         <Image
