@@ -159,7 +159,7 @@ const Form = ({
               type="number"
               className="mb-5 max-w-xs"
               variant="underlined"
-              label="Price discount :"
+              label="Price discount ( % ) :"
               value={project.projectDiscount.toString()}
               onChange={(e) =>
                 setProject({

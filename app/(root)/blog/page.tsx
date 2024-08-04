@@ -9,7 +9,7 @@ import { FaDownload } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import RelatedProject from "@/components/RelatedProject";
 import { toast } from "react-toastify";
-import { motion } from "framer-motion";
+import Loader from "@/components/Loader";
 
 //payment gateway
 // const handlePayment = async (amount, projectId) => {
@@ -106,6 +106,7 @@ const PageContent = () => {
     youtubelink: "",
     sourceCodelink: "",
   });
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const getProjectDetails = async () => {
@@ -125,6 +126,9 @@ const PageContent = () => {
         sourceCodelink: data.sourceCodelink || "",
       });
       setCategory(data.category);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000); // Ensure the loader is visible for at least 1 second
     };
 
     if (projectId) getProjectDetails();
@@ -146,6 +150,10 @@ const PageContent = () => {
 
     getRelatedProjects();
   }, [category]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   const videoID = getYouTubeID(project.youtubelink);
 
@@ -251,48 +259,45 @@ const PageContent = () => {
         </div>
 
         <div className="flex-col justify-center items-center mb-8">
-      <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
-        Buy Complete Project:-
-      </h2>
-      <motion.div
-        className="flex flex-col justify-center items-center mt-4 sm:mt-6"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="flex flex-col items-center">
-          <p className="text-white font-semibold">
-            Project price: 
-            <span className={`text-lg ${project.projectDiscount ? "line-through text-red-500" : ""} ml-2`}>
-              ₹ {project.projectPrice}
-            </span>
-          </p>
-          {project.projectDiscount > 0 && (
-            <p className="text-white font-semibold">
-              Project discount: 
-              <span className="text-green-500 ml-2">
-                {project.projectDiscount}%
-              </span>
-            </p>
-          )}
-          <p className="text-white font-semibold mt-2 text-2xl">
-            Final Price: 
-            <span className="text-blue-400 text-3xl ml-2">
-              ₹ {finalPrice}
-            </span>
-          </p>
+          <h2 className="text-xl sm:text-3xl flex justify-start text-center font-semibold text-white-800 leading-tight">
+            Buy Complete Project:-
+          </h2>
+          <div className="flex flex-col justify-center items-center mt-4 sm:mt-6">
+            <div className="flex flex-col items-center">
+              <p className="text-white font-semibold">
+                Project price:
+                <span
+                  className={`text-lg ${
+                    project.projectDiscount ? "line-through text-red-500" : ""
+                  } ml-2`}
+                >
+                  ₹ {project.projectPrice}
+                </span>
+              </p>
+              {project.projectDiscount > 0 && (
+                <p className="text-white font-semibold">
+                  Project discount:
+                  <span className="text-green-500 ml-2">
+                    {project.projectDiscount}%
+                  </span>
+                </p>
+              )}
+              <p className="text-white font-semibold mt-2 text-xl sm:text-2xl">
+                Final Price:
+                <span className="text-blue-400 text-2xl sm:text-3xl ml-2">
+                  ₹ {finalPrice}
+                </span>
+              </p>
+            </div>
+            <button
+              onClick={handleBuy}
+              className="bg-purple w-40 hover:bg-pink transition duration-500 text-white font-bold py-2 px-4 mt-4 rounded active:scale-95 flex items-center justify-center gap-2"
+            >
+              <p>Buy Now</p>
+              <FaShoppingCart />
+            </button>
+          </div>
         </div>
-        <motion.button
-          onClick={handleBuy}
-          className="bg-purple w-40 hover:bg-pink transition duration-500 text-white font-bold py-2 px-4 mt-4 rounded active:scale-95 flex items-center justify-center gap-2"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <p>Buy Now</p>
-          <FaShoppingCart />
-        </motion.button>
-      </motion.div>
-    </div>
       </div>
 
       <RelatedProject relatedProjects={relatedProjects} projectId={projectId} />
@@ -302,9 +307,9 @@ const PageContent = () => {
 
 const page = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <React.Suspense fallback={<Loader />}>
       <PageContent />
-    </Suspense>
+    </React.Suspense>
   );
 };
 
