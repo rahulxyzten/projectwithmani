@@ -26,8 +26,22 @@ const SearchForm = () => {
     return () => clearTimeout(delayDebounceFn);
   }, [search, searchParams, router, pathname]);
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const params = new URLSearchParams(searchParams);
+    if (search) {
+      params.set("query", search);
+    } else {
+      params.delete("query");
+    }
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
   return (
-    <form className="flex-center mx-auto mt-10 w-full sm:-mt-10 sm:px-5">
+    <form
+      onSubmit={handleSubmit}
+      className="flex-center mx-auto mt-10 w-full sm:-mt-10 sm:px-5"
+    >
       <label className="flex-center relative w-full max-w-3xl">
         <Image
           src="/magnifying-glass.svg"
