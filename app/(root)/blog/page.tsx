@@ -11,59 +11,6 @@ import RelatedProject from "@/components/RelatedProject";
 import { toast } from "react-toastify";
 import Loader from "@/components/Loader";
 
-//payment gateway
-// const handlePayment = async (amount, projectId) => {
-//   const res = await fetch("/api/order/create-order", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({ amount, currency: "INR" }),
-//   });
-
-//   const data = await res.json();
-
-//   const options = {
-//     key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-//     amount: data.amount,
-//     currency: data.currency,
-//     name: "Project With Mani",
-//     description: "Buy Code",
-//     order_id: data.id,
-//     handler: async (response) => {
-//       // Handle successful payment here
-//       console.log(response);
-//       // Redirect to success page or show Google Drive link
-//       const successResponse = await fetch(`/api/payment-success`, {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({
-//           razorpay_payment_id: response.razorpay_payment_id,
-//           razorpay_order_id: response.razorpay_order_id,
-//           razorpay_signature: response.razorpay_signature,
-//           projectId,
-//         }),
-//       });
-
-//       const successData = await successResponse.json();
-//       alert(`Your Google Drive link: ${successData.driveLink}`);
-//     },
-//     prefill: {
-//       name: "Your Name",
-//       email: "your.email@example.com",
-//       contact: "9999999999",
-//     },
-//     theme: {
-//       color: "#F37254",
-//     },
-//   };
-
-//   const rzp = new window.Razorpay(options);
-//   rzp.open();
-// };
-
 const getYouTubeID = (url: string): string | null => {
   const regExp =
     /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
