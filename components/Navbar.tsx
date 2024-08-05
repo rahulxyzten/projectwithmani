@@ -187,7 +187,7 @@ const Navbar = () => {
                           href="/dashboard"
                           onClick={() => setContentDropdown((prev) => !prev)}
                         >
-                          Dash Board
+                          Dashboard
                         </Link>
                       </li>
                     </>
@@ -296,7 +296,7 @@ const Navbar = () => {
                       variants={fadeInVariants}
                     >
                       <Link href="/dashboard" onClick={handleLinkClick}>
-                      Dash Board
+                      Dashboard
                       </Link>
                     </motion.li>
                   </>
