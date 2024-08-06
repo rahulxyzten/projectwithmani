@@ -488,8 +488,8 @@ button.youtube-button:hover svg {
   display: inline-flex;
   align-items: center;
   gap: .75rem;
-  background-color: #000;
-  color: #fff;
+  background-color: #fff;
+  color: #000;
   border-radius: 10rem;
   font-weight: 600;
   padding: .75rem 1.5rem;
@@ -505,8 +505,8 @@ button.youtube-button:hover svg {
   width: 25px;
   height: 25px;
   position: relative;
-  color: #000;
-  background-color: #fff;
+  color: #fff;
+  background-color: #000;
   border-radius: 50%;
   display: grid;
   place-items: center;
