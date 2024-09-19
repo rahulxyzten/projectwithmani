@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import { FaTwitter, FaLinkedin, FaYoutube, FaGithub } from "react-icons/fa";
+import Link from "next/link";
+import { FaInstagram, FaLinkedin, FaYoutube, FaGithub, FaWhatsapp } from "react-icons/fa";
 
 const page = () => {
   return (
@@ -36,38 +37,46 @@ const page = () => {
       </p>
 
       <div className="flex mt-6 space-x-4">
-        <a
-          href="https://twitter.com/yourprofile"
+      <Link
+          href="https://insta.openinapp.co/d9uo8"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-white hover:text-blue-500"
+          className="text-white hover:text-red-400"
         >
-          <FaTwitter size={30} />
-        </a>
-        <a
-          href="https://linkedin.com/in/yourprofile"
+          <FaInstagram size={30} />
+        </Link>
+        <Link
+          href="https://www.linkedin.com/in/kotini-mani-kanta-72773b211?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
           target="_blank"
           rel="noopener noreferrer"
           className="text-white hover:text-blue-700"
         >
           <FaLinkedin size={30} />
-        </a>
-        <a
-          href="https://youtube.com/yourchannel"
+        </Link>
+        <Link
+          href="https://www.youtube.com/@Projectswithmani"
           target="_blank"
           rel="noopener noreferrer"
           className="text-white hover:text-red-600"
         >
           <FaYoutube size={30} />
-        </a>
-        <a
-          href="https://github.com/yourprofile"
+        </Link>
+        <Link
+          href="https://github.com/projectswithmani"
           target="_blank"
           rel="noopener noreferrer"
           className="text-white hover:text-gray-700"
         >
           <FaGithub size={30} />
-        </a>
+        </Link>
+        <Link
+          href="https://wa.me/+917847014067"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white hover:text-green-600"
+        >
+          <FaWhatsapp size={30} />
+        </Link>
       </div>
 
       <div className="py-12"></div>
