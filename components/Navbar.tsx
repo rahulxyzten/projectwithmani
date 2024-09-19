@@ -84,7 +84,7 @@ const Navbar = () => {
           transition={{ duration: 0.5 }}
         >
           <Link href="/">
-            <Image src="/PWM.png" alt="logo" width={55} height={40} />
+            <Image src="/PWM-H.png" alt="logo" width={55} height={40} />
           </Link>
         </motion.div>
 
