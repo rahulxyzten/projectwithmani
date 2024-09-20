@@ -4,14 +4,20 @@ import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { FaInstagram, FaLinkedin, FaYoutube, FaGithub, FaWhatsapp } from "react-icons/fa";
+import {
+  FaInstagram,
+  FaLinkedin,
+  FaYoutube,
+  FaGithub,
+  FaWhatsapp,
+} from "react-icons/fa";
 import { SiRazorpay } from "react-icons/si";
 import { motion } from "framer-motion";
 
 const PageContent = () => {
   const searchParams = useSearchParams();
   const projectId = searchParams.get("id");
-
+  const [scanner, setScanner] = useState("");
   const [project, setProject] = useState({
     title: "",
     projectPrice: 0,
@@ -22,7 +28,15 @@ const PageContent = () => {
   useEffect(() => {
     const getProjectDetails = async () => {
       const response = await fetch(`/api/project/${projectId}`);
+      const responseScanner = await fetch("api/upi", {
+        headers: {
+          "Cache-Control":
+            "no-store, no-cache, must-revalidate, proxy-revalidate",
+        },
+      });
+      const dataScanner = await responseScanner.json();
       const data = await response.json();
+      dataScanner.length !== 0 && setScanner(dataScanner[0].scannerImg.url);
       setProject({
         title: data.title,
         projectPrice: data.projectPrice,
@@ -74,16 +88,14 @@ const PageContent = () => {
           )}
           <p className="text-white font-semibold text-2xl py-5">
             Final Price:
-            <span className="text-blue-400 text-3xl ml-2">
-              ₹ {finalPrice}
-            </span>
+            <span className="text-blue-400 text-3xl ml-2">₹ {finalPrice}</span>
           </p>
         </div>
       </motion.div>
 
       <div className="flex flex-col items-center bg-white p-8 rounded-lg shadow-lg">
         <Image
-          src="/qr.jpg"
+          src={scanner}
           className="!bg-transparent object-cover rounded-md"
           width={300}
           height={300}
@@ -95,8 +107,11 @@ const PageContent = () => {
       </div>
 
       <div className="flex flex-col justify-center items-center">
-        <p className=" text-white-800 mt-4">After Payment is done, send the Screenshot in the below Whatsapp Number by clicking it</p>
-        <Link target="_blank" href="https://wa.me/+917655082651">
+        <p className=" text-white-800 mt-4">
+          After Payment is done, send the Screenshot in the below Whatsapp
+          Number by clicking it
+        </p>
+        <Link target="_blank" href="https://wa.me/+917847014067">
           <button className="bg-green-400 w-40 hover:bg-green-700 transition duration-500 text-white font-bold py-2 px-4 mt-4 rounded active:scale-95 flex items-center justify-center gap-2">
             <p>Whatsapp</p>
             <FaWhatsapp />

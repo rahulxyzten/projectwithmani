@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import AdminTable from "@/components/AdminTable";
 import CategoryTable from "@/components/CategoryTable";
 import OfferTable from "@/components/OfferTable";
+import UpiTable from "@/components/UpiTable";
 
 interface Admin {
   _id: string;
@@ -27,6 +28,14 @@ interface Offer {
   };
 }
 
+interface Upi {
+  _id: string;
+  scannerImg: {
+    public_id: string;
+    url: string;
+  };
+}
+
 const page = () => {
   const router = useRouter();
   const { data: session } = useSession();
@@ -34,6 +43,7 @@ const page = () => {
   const [admins, setAdmins] = useState<Admin[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [recentOffer, setRecentOffer] = useState<Offer[]>([]);
+  const [recentScanner, setRecentScanner] = useState<Upi[]>([]);
 
   useEffect(() => {
     // Redirect if not an admin
@@ -88,10 +98,26 @@ const page = () => {
     }
   };
 
+  const fetchUpi = async () => {
+    try {
+      const response = await fetch("api/upi", {
+        headers: {
+          "Cache-Control":
+            "no-store, no-cache, must-revalidate, proxy-revalidate",
+        },
+      });
+      const data = await response.json();
+      setRecentScanner(data);
+    } catch (error) {
+      console.error("Error fetching scanner:", error);
+    }
+  };
+
   useEffect(() => {
     fetchAdmins();
     fetchCategories();
     fetchOffers();
+    fetchUpi();
   }, []);
 
   return (
@@ -100,6 +126,7 @@ const page = () => {
         <AdminTable admins={admins} setAdmins={setAdmins} />
         <CategoryTable categories={categories} setCategories={setCategories} />
         <OfferTable recentOffer={recentOffer} setRecentOffer={setRecentOffer} />
+        <UpiTable recentScanner={recentScanner} setRecentScanner={setRecentScanner} />
       </div>
     </section>
   );

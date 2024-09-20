@@ -83,7 +83,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
       <h1 className="mb-7 lg:ml-12 text-2xl font-bold xs:text-4xl text-white-800">
         categories✨
       </h1>
-      <div className="shadow-sm dark:border-zinc-600 rounded-[10px] border-2 border-black-400 p-5 max-w-2xl mx-auto flex flex-col items-center justify-center mb-12 overflow-hidden">
+      <div className="shadow-sm dark:border-zinc-600 rounded-[10px] border-2 border-black-400 p-5 max-w-2xl mx-auto flex flex-col items-center justify-center mb-16 overflow-hidden">
         <Table
           className="max-w-xl whitespace-pre overflow-auto"
           removeWrapper

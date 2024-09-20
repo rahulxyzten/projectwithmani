@@ -12,62 +12,58 @@ import {
   Image,
 } from "@nextui-org/react";
 
-interface Offer {
+interface Upi {
   _id: string;
-  offerDescription: string;
-  youtubelink: string;
-  cover: {
+  scannerImg: {
     public_id: string;
     url: string;
   };
 }
 
-interface OfferTableProps {
-  recentOffer: Offer[];
-  setRecentOffer: React.Dispatch<React.SetStateAction<Offer[]>>;
+interface UpiTableProps {
+  recentScanner: Upi[];
+  setRecentScanner: React.Dispatch<React.SetStateAction<Upi[]>>;
 }
 
-const OfferTable: React.FC<OfferTableProps> = ({
-  recentOffer,
-  setRecentOffer,
+const UpiTable: React.FC<UpiTableProps> = ({
+  recentScanner,
+  setRecentScanner,
 }) => {
-  const [offer, setOffer] = useState({
-    offerDescription: "",
-    youtubelink: "",
-    cover: {} as File,
+  const [upi, setUpi] = useState({
+    scannerImg: {} as File,
   });
-  const [addingOffer, setAddingOffer] = useState(false);
+  const [addingScanner, setAddingScanner] = useState(false);
 
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setOffer({ ...offer, cover: file });
+      setUpi({ ...upi, scannerImg: file });
     }
   };
 
-  const createOffer = async (e: FormEvent) => {
+  const createScanner = async (e: FormEvent) => {
     e.preventDefault();
 
-    if (recentOffer.length >= 1) {
-      toast("You can add only one offer at a time.");
-      setOffer({ offerDescription: "", youtubelink: "", cover: {} as File });
+    if (recentScanner.length >= 1) {
+      toast("You can add only one scanner at a time.");
+      setUpi({ scannerImg: {} as File });
       return;
     }
 
-    setAddingOffer(true);
+    setAddingScanner(true);
 
     const presetKey = process.env.NEXT_PUBLIC_PRESET_KEY;
     const cloudName = process.env.NEXT_PUBLIC_CLOUD_NAME;
 
     if (!presetKey || !cloudName) {
       console.error("Cloudinary configuration is missing.");
-      setAddingOffer(false);
+      setAddingScanner(false);
       return;
     }
 
     try {
       const data = new FormData();
-      data.append("file", offer.cover);
+      data.append("file", upi.scannerImg);
       data.append("upload_preset", presetKey);
 
       const cloudRes = await fetch(
@@ -84,12 +80,10 @@ const OfferTable: React.FC<OfferTableProps> = ({
         const imagePublicId = resData.public_id;
         const imageUrl = resData.secure_url;
 
-        const response = await fetch("/api/offer/new", {
+        const response = await fetch("/api/upi/new", {
           method: "POST",
           body: JSON.stringify({
-            offerDescription: offer.offerDescription,
-            youtubelink: offer.youtubelink,
-            cover: {
+            scannerImg: {
               public_id: imagePublicId,
               url: imageUrl,
             },
@@ -97,38 +91,38 @@ const OfferTable: React.FC<OfferTableProps> = ({
         });
 
         if (response.ok) {
-          toast("Offer added successfully");
+          toast("Scanner added successfully");
           const newOffer = await response.json();
-          setRecentOffer((prevOffers) => [...prevOffers, newOffer]);
-          setOffer({
-            offerDescription: "",
-            youtubelink: "",
-            cover: {} as File,
+          setRecentScanner((prevScanners) => [...prevScanners, newOffer]);
+          setUpi({
+            scannerImg: {} as File,
           });
         }
       }
     } catch (error) {
       console.log(error);
     } finally {
-      setAddingOffer(false);
+      setAddingScanner(false);
     }
   };
 
-  const handleDeleteOffer = async (id: string) => {
-    const hasConfirmed = confirm("Are you sure you want to delete this offer");
+  const handleDeleteScanner = async (id: string) => {
+    const hasConfirmed = confirm(
+      "Are you sure you want to delete this scanner"
+    );
 
     if (hasConfirmed) {
       try {
-        const response = await fetch(`/api/offer/${id.toString()}`, {
+        const response = await fetch(`/api/upi/${id.toString()}`, {
           method: "DELETE",
         });
 
         if (response.ok) {
-          toast("😔 Offer deleted successfully");
-          const filteredOffers = recentOffer.filter((p) => p._id !== id);
-          setRecentOffer(filteredOffers);
+          toast("😔 Scanner deleted successfully");
+          const filteredScanners = recentScanner.filter((p) => p._id !== id);
+          setRecentScanner(filteredScanners);
         } else {
-          toast("Failed to delete offer");
+          toast("Failed to delete scanner");
         }
       } catch (error) {
         console.log(error);
@@ -139,35 +133,31 @@ const OfferTable: React.FC<OfferTableProps> = ({
   return (
     <>
       <h1 className="mb-7 lg:ml-12 text-2xl font-bold xs:text-4xl text-white-800">
-        Recent offer🎉
+        UPI scanner📄
       </h1>
-      <div className="shadow-sm dark:border-zinc-600 rounded-[10px] border-2 border-black-400 p-5 max-w-3xl mx-auto flex flex-col items-center justify-center mb-16 overflow-hidden">
+      <div className="shadow-sm dark:border-zinc-600 rounded-[10px] border-2 border-black-400 p-5 max-w-3xl mx-auto flex flex-col items-center justify-center overflow-hidden">
         <Table
           className="whitespace-pre overflow-auto"
           removeWrapper
           aria-label="Example static collection table"
         >
           <TableHeader>
-            <TableColumn>OFFER</TableColumn>
             <TableColumn>IMAGE</TableColumn>
             <TableColumn>OPTION</TableColumn>
           </TableHeader>
           <TableBody>
-            {recentOffer.map((offer, index) => (
+            {recentScanner.map((scanner, index) => (
               <TableRow key={index}>
                 <TableCell className="text-white">
-                  {offer.offerDescription}
-                </TableCell>
-                <TableCell className="text-white">
                   <Image
-                    width={100}
+                    width={200}
                     alt="NextUI hero Image"
-                    src={offer.cover.url}
+                    src={scanner.scannerImg.url}
                   />
                 </TableCell>
                 <TableCell className="text-white">
                   <div
-                    onClick={() => handleDeleteOffer(offer._id)}
+                    onClick={() => handleDeleteScanner(scanner._id)}
                     className="flex gap-2 text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer"
                   >
                     <svg
@@ -195,34 +185,12 @@ const OfferTable: React.FC<OfferTableProps> = ({
         </Table>
         <div className="mt-6 w-full">
           <form
-            onSubmit={createOffer}
+            onSubmit={createScanner}
             className="sm:mx-5 flex flex-col justify-center items-center"
           >
-            <Input
-              type="text"
-              className="mb-3"
-              variant="underlined"
-              label="Offer description / Youtube title :"
-              value={offer.offerDescription}
-              onChange={(e) =>
-                setOffer({ ...offer, offerDescription: e.target.value })
-              }
-            />
-            <Input
-              type="text"
-              className="mb-5"
-              variant="underlined"
-              label="Youtube link (not mandatory) :"
-              value={offer.youtubelink}
-              onChange={(e) =>
-                setOffer({ ...offer, youtubelink: e.target.value })
-              }
-            />
             <div className="mt-2 w-full flex flex-col justify-center items-center sm:flex-row">
               <div className="w-full mr-3 sm:mb-2">
-                <p className="mb-2 ml-1 text-sm text-gray-200">
-                  Offer image / Youtube thumbnail :
-                </p>
+                <p className="mb-2 ml-1 text-sm text-gray-200">Scanner Img:</p>
                 <Input
                   type="file"
                   className="mb-2 sm:mb-0 sm:max-w-xl"
@@ -236,7 +204,7 @@ const OfferTable: React.FC<OfferTableProps> = ({
                 type="submit"
                 className="bg-purple w-40 hover:bg-pink transition duration-500 text-white font-bold py-2 px-4 mt-2 rounded active:scale-95 flex items-center justify-center gap-2"
               >
-                {addingOffer ? "Uploading..." : "Add"}
+                {addingScanner ? "Uploading..." : "Add"}
               </button>
             </div>
           </form>
@@ -246,4 +214,4 @@ const OfferTable: React.FC<OfferTableProps> = ({
   );
 };
 
-export default OfferTable;
+export default UpiTable;

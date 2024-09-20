@@ -296,7 +296,7 @@ const Navbar = () => {
                       variants={fadeInVariants}
                     >
                       <Link href="/dashboard" onClick={handleLinkClick}>
-                      Dashboard
+                        Dashboard
                       </Link>
                     </motion.li>
                   </>
