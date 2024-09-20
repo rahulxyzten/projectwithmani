@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaInstagram, FaLinkedin, FaYoutube, FaGithub, FaWhatsapp } from "react-icons/fa";
+import { SiGmail } from "react-icons/si";
+
 
 const page = () => {
   return (
@@ -28,7 +30,7 @@ const page = () => {
         Communication Engineering. Driven by my passion for technology, I share
         my knowledge and experiences through my YouTube channel. Regardless of
         the outcome, I am committed to consistently creating valuable content on
-        YouTube. Additionally, I offer readymade projects for students tailored
+        YouTube. Additionally, I offer ready made projects for students tailored
         to their requirements at affordable and competitive prices.
       </p>
 
@@ -76,6 +78,14 @@ const page = () => {
           className="text-white hover:text-green-600"
         >
           <FaWhatsapp size={30} />
+        </Link>
+        <Link
+          href="mailto:contact@projectswithmani.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white hover:text-red-500"
+        >
+          <SiGmail size={30} />
         </Link>
       </div>
 
