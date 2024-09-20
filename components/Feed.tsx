@@ -151,10 +151,10 @@ const Feed = () => {
             height={500}
           />
           <a
-            href="mailto:your-email@example.com"
+            href="mailto:contact@projectswithmani.com"
             className="text-white hover:underline text-center text-lg"
           >
-            Contact us via email for Any queries : email@gmail.com
+            Contact us via email for Any queries : contact@projectswithmani.com
           </a>
         </div>
       </section>
