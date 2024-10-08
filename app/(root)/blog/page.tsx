@@ -1,6 +1,6 @@
 "use client";
 
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +9,7 @@ import { FaDownload } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import RelatedProject from "@/components/RelatedProject";
 import { toast } from "react-toastify";
-import Loader from "@/components/Loader";
+import { Spinner } from "@nextui-org/react";
 
 const getYouTubeID = (url: string): string | null => {
   const regExp =
@@ -75,7 +75,7 @@ const PageContent = () => {
       setCategory(data.category);
       setTimeout(() => {
         setLoading(false);
-      }, 1000); // Ensure the loader is visible for at least 1 second
+      }, 1000); // Ensure the Spinner is visible for at least 1 second
     };
 
     if (projectId) getProjectDetails();
@@ -99,7 +99,11 @@ const PageContent = () => {
   }, [category]);
 
   if (loading) {
-    return <Loader />;
+    return (
+      <div className="flex size-full h-screen items-center justify-center">
+        <Spinner />
+      </div>
+    );
   }
 
   const videoID = getYouTubeID(project.youtubelink);
@@ -254,7 +258,7 @@ const PageContent = () => {
 
 const page = () => {
   return (
-    <React.Suspense fallback={<Loader />}>
+    <React.Suspense fallback={<Spinner />}>
       <PageContent />
     </React.Suspense>
   );

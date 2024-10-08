@@ -8,15 +8,17 @@ import SearchForm from "./SearchForm";
 import Filters from "./Filters";
 import Header from "./Header";
 import ProjectCard from "./ProjectCard";
+import { Spinner } from "@nextui-org/react";
 import { motion } from "framer-motion";
 
 const Feed = () => {
   const searchParams = useSearchParams();
-
   const [projects, setProjects] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
+      setLoading(true);
       const category = searchParams.get("category") || "all";
       const query = searchParams.get("query") || "";
       const response = await fetch(
@@ -24,6 +26,7 @@ const Feed = () => {
       );
       const data = await response.json();
       setProjects(data.reverse());
+      setLoading(false);
     };
 
     fetchProjects();
@@ -108,7 +111,9 @@ const Feed = () => {
           <Header query={query} category={category} />
         )}
         <div className="mt-12 flex w-full flex-wrap justify-center gap-10 sm:gap-6">
-          {projects?.length > 0 ? (
+          {loading ? (
+            <Spinner />
+          ) : projects?.length > 0 ? (
             projects.slice(0, 6).map((project: any, index: number) => (
               <motion.div
                 key={project._id}

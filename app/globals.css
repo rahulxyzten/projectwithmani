@@ -128,10 +128,6 @@
   .no-focus {
     @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
   }
-
-  .loader {
-    @apply flex size-full h-screen items-center justify-center gap-3 text-white;
-  }
 }
 
 .frame {

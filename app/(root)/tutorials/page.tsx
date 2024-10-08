@@ -6,14 +6,33 @@ import SearchForm from "@/components/SearchForm";
 import Filters from "@/components/Filters";
 import Header from "@/components/Header";
 import ProjectCard from "@/components/ProjectCard";
+import { Spinner } from "@nextui-org/react";
 import { motion } from "framer-motion";
 
 const AllProjectsFeed = () => {
   const searchParams = useSearchParams();
-
   const [projects, setProjects] = useState<any[]>([]);
   const [visibleCount, setVisibleCount] = useState(9);
+  const [loading, setLoading] = useState<boolean>(false);
 
+  useEffect(() => {
+    const fetchProjects = async () => {
+      setLoading(true);
+      const category = searchParams.get("category") || "all";
+      const query = searchParams.get("query") || "";
+      const response = await fetch(
+        `/api/project?category=${category}&query=${query}`
+      );
+      const data = await response.json();
+      setProjects(data.reverse());
+      setLoading(false);
+    };
+
+    fetchProjects();
+  }, [searchParams]);
+
+  const query = searchParams.get("query") || "";
+  const category = searchParams.get("category") || "all";
 
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -26,24 +45,6 @@ const AllProjectsFeed = () => {
     }),
   };
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      const category = searchParams.get("category") || "all";
-      const query = searchParams.get("query") || "";
-      const response = await fetch(
-        `/api/project?category=${category}&query=${query}`
-      );
-      const data = await response.json();
-      setProjects(data.reverse());
-    };
-
-    fetchProjects();
-  }, [searchParams]);
-
-  const query = searchParams.get("query") || "";
-  const category = searchParams.get("category") || "all";
-
-  
   const handleLoadMore = () => {
     setVisibleCount((prevCount) => prevCount + 6);
   };
@@ -64,40 +65,45 @@ const AllProjectsFeed = () => {
             <Header query={query} category={category} />
           )}
           <div className="mt-12 flex w-full flex-wrap justify-center gap-10 sm:gap-6">
-            {projects?.length > 0 ? (
-
-              projects.slice(0, visibleCount).map((project: any, index: number) => (
-                <motion.div
-                  key={project._id}
-                  custom={index}
-                  initial="hidden"
-                  animate="visible"
-                  variants={cardVariants}
-                >
-                  <ProjectCard
+            {loading ? (
+              <div className="my-24">
+                <Spinner />
+              </div>
+            ) : projects?.length > 0 ? (
+              projects
+                .slice(0, visibleCount)
+                .map((project: any, index: number) => (
+                  <motion.div
                     key={project._id}
-                    id={project._id}
-                    title={project.title}
-                    summary={project.summary}
-                    content={project.content}
-                    category={project.category}
-                    imgUrl={project.thumbnail?.url}
-                    youtubeLink={project.youtubelink}
-                  />
-                </motion.div>
-              ))
+                    custom={index}
+                    initial="hidden"
+                    animate="visible"
+                    variants={cardVariants}
+                  >
+                    <ProjectCard
+                      key={project._id}
+                      id={project._id}
+                      title={project.title}
+                      summary={project.summary}
+                      content={project.content}
+                      category={project.category}
+                      imgUrl={project.thumbnail?.url}
+                      youtubeLink={project.youtubelink}
+                    />
+                  </motion.div>
+                ))
             ) : (
               <p className="body-regular text-white-400">No projects found</p>
             )}
           </div>
           {visibleCount < projects.length && (
-          <button
-            onClick={handleLoadMore}
-            className="bg-purple hover:bg-pink translation duration-500 text-white font-bold py-2 px-4 rounded my-8 active:scale-95"
-          >
-            Load More
-          </button>
-        )}
+            <button
+              onClick={handleLoadMore}
+              className="bg-purple hover:bg-pink translation duration-500 text-white font-bold py-2 px-4 rounded my-8 active:scale-95"
+            >
+              Load More
+            </button>
+          )}
         </section>
       </div>
     </section>
@@ -106,7 +112,7 @@ const AllProjectsFeed = () => {
 
 const page = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Spinner/>}>
       <AllProjectsFeed />
     </Suspense>
   );
